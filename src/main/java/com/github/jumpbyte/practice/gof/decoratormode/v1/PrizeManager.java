@@ -1,6 +1,6 @@
 package com.github.jumpbyte.practice.gof.decoratormode.v1;
 
-import com.jumpbyte.github.gof23.decoratormode.common.Repository;
+import com.github.jumpbyte.practice.gof.decoratormode.common.Repository;
 
 import java.util.Date;
 

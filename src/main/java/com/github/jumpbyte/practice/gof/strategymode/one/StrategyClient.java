@@ -1,7 +1,7 @@
 package com.github.jumpbyte.practice.gof.strategymode.one;
 
-import com.jumpbyte.github.gof23.strategymode.PayInfo;
-import com.jumpbyte.github.gof23.strategymode.PayType;
+import com.github.jumpbyte.practice.gof.strategymode.PayInfo;
+import com.github.jumpbyte.practice.gof.strategymode.PayType;
 
 /**
  * @className: StrategyClient

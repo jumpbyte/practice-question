@@ -1,6 +1,6 @@
 package com.github.jumpbyte.practice.gof.strategymode.two;
 
-import com.jumpbyte.github.gof23.strategymode.PayInfo;
+import com.github.jumpbyte.practice.gof.strategymode.PayInfo;
 
 /**
  * @className: AliPayDiscountStrategy

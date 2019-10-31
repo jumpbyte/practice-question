@@ -1,6 +1,7 @@
 package com.github.jumpbyte.practice.spi.impl;
 
-import com.jumpbyte.github.spi.ISearch;
+
+import com.github.jumpbyte.practice.spi.ISearch;
 
 /**
  * @className: EsSearchService

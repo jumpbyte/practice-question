@@ -1,11 +1,11 @@
 package com.github.jumpbyte.practice.gof.decoratormode;
 
-import com.jumpbyte.github.gof23.decoratormode.v2.DefaultPrizeComponent;
-import com.jumpbyte.github.gof23.decoratormode.v2.GroupPrizeDecorator;
-import com.jumpbyte.github.gof23.decoratormode.v2.MonthPrizeDecorator;
-import com.jumpbyte.github.gof23.decoratormode.v2.PrizeComponent;
-import com.jumpbyte.github.gof23.decoratormode.v2.PrizeDecorator;
-import com.jumpbyte.github.gof23.decoratormode.v2.SumPrizeDecorator;
+import com.github.jumpbyte.practice.gof.decoratormode.v2.DefaultPrizeComponent;
+import com.github.jumpbyte.practice.gof.decoratormode.v2.GroupPrizeDecorator;
+import com.github.jumpbyte.practice.gof.decoratormode.v2.MonthPrizeDecorator;
+import com.github.jumpbyte.practice.gof.decoratormode.v2.PrizeComponent;
+import com.github.jumpbyte.practice.gof.decoratormode.v2.PrizeDecorator;
+import com.github.jumpbyte.practice.gof.decoratormode.v2.SumPrizeDecorator;
 
 /**
  * 场景类
