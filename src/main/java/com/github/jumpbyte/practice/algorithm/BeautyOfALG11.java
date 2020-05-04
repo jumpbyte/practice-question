@@ -58,4 +58,29 @@ public class BeautyOfALG11 {
             a[j+1] = value;
         }
     }
+
+    /**
+     * 选择排序
+     * @param a
+     * @param n
+     */
+    public void selectionSort(int[] a , int n){
+        if(n<=1){
+            return;
+        }
+
+        for (int i = 0; i < n -1 ; i++) {
+            //查找最小值下标
+            int minIndex = i;
+            for (int j = i+ 1; j < n; j++) {
+                if(a[j] < a[minIndex]){
+                    minIndex = j;
+                }
+            }
+            //交换位置
+            int tmp = a[i];
+            a[i] = a[minIndex];
+            a[minIndex] = tmp;
+        }
+    }
 }
