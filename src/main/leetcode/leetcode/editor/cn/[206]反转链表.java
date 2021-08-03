@@ -54,8 +54,22 @@
  * }
  */
 class Solution {
-    public ListNode reverseList(ListNode head) {
 
+
+    /**
+     * 递归 解决
+     * @param head
+     * @return
+     */
+    public ListNode reverseList(ListNode head) {
+        //1->2->3->3->4->5
+         if(head == null || head.next == null){
+             return head;
+         }
+         ListNode root = reverseList(head.next);
+         head.next.next = head;
+         head.next = null;
+         return root;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
