@@ -56,12 +56,32 @@
 class Solution {
 
 
+
+    /**
+     * while 解决
+     * @param head
+     * @return
+     */
+    public ListNode reverseList(ListNode head) {
+        //1->2->3->3->4->5
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        while (head!=null && head.next!=null){
+            ListNode dnext= dummy.next;
+            ListNode hnext = head.next;
+            dummy.next = hnext;
+            head.next = hnext.next;
+            hnext.next = dnext;
+        }
+        return dummy.next;
+    }
+
     /**
      * 递归 解决
      * @param head
      * @return
      */
-    public ListNode reverseList(ListNode head) {
+    public ListNode reverseList1(ListNode head) {
         //1->2->3->3->4->5
          if(head == null || head.next == null){
              return head;
