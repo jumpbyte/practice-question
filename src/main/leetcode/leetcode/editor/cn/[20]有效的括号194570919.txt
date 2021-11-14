@@ -1,0 +1,44 @@
+class Solution {
+
+    /**
+     * 栈 解法
+     * @param s
+     * @return
+     */
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        if(s==null || s ==""){
+            return  true;
+        }
+        for (char c : s.toCharArray()) {
+             if(c=='(' || c=='[' || c=='{'){
+                 stack.push(c);
+             }else {
+                 if(stack.isEmpty()){
+                     return false;
+                 }else{
+                     char tmp = stack.pop();
+                     if(c==')'){
+                         if(tmp!='('){
+                             return false;
+                         }
+                     }
+                     if(c==']'){
+                         if(tmp!= '['){
+                             return false;
+                         }
+                     }
+                     if(c=='}'){
+                         if(tmp!= '{'){
+                             return false;
+                         }
+                     }
+                 }
+             }
+        }
+        return  stack.isEmpty();
+    }
+}
+
+//runtime:1 ms
+//memory:35.9 MB
