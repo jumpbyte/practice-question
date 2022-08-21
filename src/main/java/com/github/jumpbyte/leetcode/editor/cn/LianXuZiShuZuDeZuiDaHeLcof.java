@@ -30,11 +30,12 @@ package com.github.jumpbyte.leetcode.editor.cn;
 public class LianXuZiShuZuDeZuiDaHeLcof {
     public static void main(String[] args) {
         Solution solution = new LianXuZiShuZuDeZuiDaHeLcof().new Solution();
+        System.out.println(solution.maxSubArray(new int[]{-1, -2, 1, 2, 4}));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public int maxSubArray(int[] nums) {
+        public int maxSubArray1(int[] nums) {
             if (nums == null) {
                 return 0;
             }
@@ -62,7 +63,48 @@ public class LianXuZiShuZuDeZuiDaHeLcof {
             }
             return maxSum;
         }
+
+
+        /**
+         * 动态规划 1 解法
+         *
+         * @param nums
+         * @return
+         */
+        public int maxSubArrayByDp1(int[] nums) {
+            int res = nums[0];
+            int[] dp = new int[nums.length];
+            dp[0] = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                if (dp[i - 1] <= 0) {
+                    dp[i] = nums[i];
+                    res = Math.max(res, dp[i]);
+                } else {
+                    dp[i] = dp[i - 1] + nums[i];
+                    res = Math.max(res, dp[i]);
+                }
+            }
+            return res;
+        }
+
+        /**
+         * 动态规划 2 优化，复用nums数组
+         *
+         * @param nums
+         * @return
+         */
+        public int maxSubArray(int[] nums) {
+            int res = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                nums[i] += Math.max(nums[i - 1], 0);
+                res = Math.max(res, nums[i]);
+            }
+            return res;
+        }
+
+
     }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
