@@ -1,0 +1,104 @@
+# 解法
+
+## 思路和算法
+
+对于长度为 $n$ 的数组 $\textit{nums}$，如果使用三重循环枚举所有的三元组，则时间复杂度是 $O(n^3)$，需要优化。
+
+为了降低时间复杂度，可以使用排序和双指针的做法。
+
+首先将数组按升序排序，然后在升序数组中寻找最接近 $\textit{target}$ 的三元组的元素之和。
+
+在升序数组中，三元组的元素之和的最小值是 $\textit{minSum} = \textit{nums}[0] + \textit{nums}[1] + \textit{nums}[2]$，最大值是 $\textit{maxSum} = \textit{nums}[n - 3] + \textit{nums}[n - 2] + \textit{nums}[n - 1]$。如果 $\textit{minSum} \ge \textit{target}$，则任意一个三元组的元素之和都不会比 $\textit{minSum}$ 更接近 $\textit{target}$，因此最接近 $\textit{target}$ 的三元组的元素之和是 $\textit{minSum}$，返回 $\textit{minSum}$。如果 $\textit{maxSum} \le \textit{target}$，则任意一个三元组的元素之和都不会比 $\textit{maxSum}$ 更接近 $\textit{target}$，因此最接近 $\textit{target}$ 的三元组的元素之和是 $\textit{maxSum}$，返回 $\textit{maxSum}$。
+
+当 $\textit{minSum} < \textit{target} < \textit{maxSum}$ 时，需要遍历三元组寻找最接近 $\textit{target}$ 的三元组的元素之和。
+
+在升序数组中，对于任意一个满足 $0 \le i < j < k < n$ 的三元组 $(\textit{nums}[i], \textit{nums}[j], \textit{nums}[k])$，必有 $\textit{nums}[i] \le \textit{nums}[j] \le \textit{nums}[k]$。当 $i$ 固定时，问题转化成遍历下标对 $(j, k)$ 寻找最接近 $\textit{target}$ 的三元组的元素之和。由于数组已经按升序排序，因此可以使用双指针的做法寻找最接近 $\textit{target}$ 的三元组的元素之和。
+
+双指针的做法是，当 $i$ 固定时，将 $j$ 初始化为 $i + 1$，将 $k$ 初始化为 $n - 1$。每次计算三元组的元素之和 $\textit{sum}$，即 $\textit{sum} = \textit{nums}[i] + \textit{nums}[j] + \textit{nums}[k]$。如果 $\textit{sum} = \textit{target}$，则找到元素之和等于 $\textit{target}$ 的三元组，该三元组的元素之和最接近 $\textit{target}$，因此返回 $\textit{target}$。
+
+如果 $\textit{sum} \ne \textit{target}$，则根据 $\textit{sum}$ 和 $\textit{target}$ 的差的绝对值更新最接近 $\textit{target}$ 的三元组的元素之和，然后根据 $\textit{sum}$ 和 $\textit{target}$ 的大小关系调整指针指向的下标。
+
+- 如果 $\textit{sum} < \textit{target}$，则只有增加 $\textit{sum}$ 的值才可能更接近 $\textit{target}$，因此将 $j$ 向右移动一位。
+
+- 如果 $\textit{sum} > \textit{target}$，则只有减少 $\textit{sum}$ 的值才可能更接近 $\textit{target}$，因此将 $k$ 向左移动一位。
+
+上述操作的条件是 $0 \le i < j < k < n$，因此 $i$ 的取值范围是 $0 \le i < n - 2$。对于每个 $i$，当 $j = k$ 时，结束对当前 $i$ 的操作。
+
+当所有的 $i$ 都遍历结束之后，即可得到最接近 $\textit{target}$ 的三元组的元素之和。
+
+双指针的做法不会遗漏掉答案，因为对于任意符合要求的下标对 $(j_0, k_0)$，当 $j = j_0$ 且 $k > k_0$ 时 $j$ 不可能向右移动，当 $k = k_0$ 且 $j < j_0$ 时 $k$ 不可能向左移动。
+
+上述做法对于数组中存在重复元素的情况会产生重复计算。为了避免重复计算，可以做去重。
+
+由于数组已经按升序排序，因此重复元素在数组中的相邻位置，可以通过比较相邻位置的元素寻找重复元素，实现去重。
+
+当 $\textit{nums}[i] = \textit{nums}[i - 1]$ 时，$\textit{nums}[i] + \textit{nums}[j] + \textit{nums}[k] = \textit{nums}[i - 1] + \textit{nums}[j] + \textit{nums}[k]$，且三元组的第一个数位于下标 $i - 1$ 的情况已经遍历过，因此三元组的第一个数位于下标 $i$ 时一定会和已经遍历过的三元组重复，应跳过当前下标 $i$。
+
+对于固定 $i$ 之后的下标对 $(j, k)$，由于双指针的移动方向是 $j$ 向右移动、$k$ 向左移动，因此如果 $i + 1 < j < k$ 且 $\textit{nums}[j] = \textit{nums}[j - 1]$ 或 $j < k < n - 1$ 且 $\textit{nums}[k] = \textit{nums}[k + 1]$，当前的下标对 $(j, k)$ 与 $i$ 组成的三元组一定会和已经遍历过的三元组重复，应跳过元素值重复的下标。
+
+根据上述分析，去重的做法如下。
+
+- 如果 $i > 0$ 且 $\textit{nums}[i] = \textit{nums}[i - 1]$，则跳过当前下标 $i$。
+
+- 每次将下标 $j$ 向右移动之后，如果 $j < k$ 且 $\textit{nums}[j] = \textit{nums}[j - 1]$，则将 $j$ 向右移动，直到 $j \ge k$ 或 $\textit{nums}[j] \ne \textit{nums}[j - 1]$。
+
+- 每次将下标 $k$ 向左移动之后，如果 $j < k$ 且 $\textit{nums}[k] = \textit{nums}[k + 1]$，则将 $k$ 向左移动，直到 $j \ge k$ 或 $\textit{nums}[k] \ne \textit{nums}[k + 1]$。
+
+## 代码
+
+* [sol1-Java]
+
+```Java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int minSum = nums[0] + nums[1] + nums[2];
+        int maxSum = nums[n - 3] + nums[n - 2] + nums[n - 1];
+        if (minSum >= target) {
+            return minSum;
+        }
+        if (maxSum <= target) {
+            return maxSum;
+        }
+        int closest = minSum;
+        int minDiff = Math.abs(minSum - target);
+        for (int i = 0; i < n - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int j = i + 1, k = n - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == target) {
+                    return target;
+                }
+                int diff = Math.abs(sum - target);
+                if (diff < minDiff) {
+                    closest = sum;
+                    minDiff = diff;
+                }
+                if (sum < target) {
+                    j++;
+                    while (j < k && nums[j] == nums[j - 1]) {
+                        j++;
+                    }
+                } else {
+                    k--;
+                    while (j < k && nums[k] == nums[k + 1]) {
+                        k--;
+                    }
+                }
+            }
+        }
+        return closest;
+    }
+}
+```
+
+## 复杂度分析
+
+- 时间复杂度：$O(n^2)$，其中 $n$ 是数组 $\textit{nums}$ 的长度。对数组排序需要 $O(n \log n)$ 的时间，排序之后，遍历三元组的第一个元素需要 $O(n)$ 的时间，使用双指针遍历三元组的后两个元素需要 $O(n)$ 的时间，即寻找所有三元组需要 $O(n^2)$ 的时间，因此时间复杂度是 $O(n \log n + n^2) = O(n^2)$。
+
+- 空间复杂度：$O(\log n)$，其中 $n$ 是数组 $\textit{nums}$ 的长度。空间复杂度主要取决于排序的递归调用栈空间。
+

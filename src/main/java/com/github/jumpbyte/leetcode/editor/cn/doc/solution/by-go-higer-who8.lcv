@@ -1,0 +1,41 @@
+### 解题思路
+
+本题意在如何处理三数之和与target的最接近值(即两者之间的距离最近)。其次是对边界和重复取值的优化。
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int sum = accumulate(nums.begin(),nums.begin()+3,0);
+        for(int i = 0; i < nums.size() - 2; ++i)
+        {
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+            int end = nums.size()-1,j = i + 1;
+            while(j < end)
+            {
+                int tmp = nums[i] + nums[j] + nums[end];
+                if(abs(tmp - target) < abs(sum - target))
+                   sum = tmp;
+                if(tmp > target)
+                {
+                    --end;
+                    while(end != j && nums[end] == nums[end+1]) --end;
+                }
+                else if(tmp < target)
+                {
+                    ++j;
+                    while(j != end && nums[j] == nums[j-1])  ++j;
+                }
+                else return tmp;
+            }
+        }
+        return sum;
+    }
+};
+```
+
