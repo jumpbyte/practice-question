@@ -38,6 +38,12 @@ public class FanZhuanLianBiaoLcof {
      */
     class Solution {
 
+        /**
+         * 解法1
+         *
+         * @param head
+         * @return
+         */
         public ListNode reverseList1(ListNode head) {
             //1->2->3->3->4->5
             ListNode dummy = new ListNode(0);
@@ -54,8 +60,7 @@ public class FanZhuanLianBiaoLcof {
 
 
         /**
-         * 不使用dummy节点解法
-         *
+         * 解法2
          * @param head
          * @return
          */
@@ -77,8 +82,7 @@ public class FanZhuanLianBiaoLcof {
         }
 
         /**
-         * 递归法
-         *
+         * 解法3：递归法
          * @param head
          * @return
          */
