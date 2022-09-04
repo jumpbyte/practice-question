@@ -1,0 +1,50 @@
+思路：用3个指针，只不过a正常遍历（保证下一次移动到的元素不与上一次的相同，第一次开始的a因为前面没有元素故为不同），因为要求a+b+c = 0，则为求b+c = -a,当-a确定时，b增大，c就减小，则b，c为对碰双指针，b = a+1开始遍历（同样保证下一次移动到的元素不与上一次的相同，b同理a），c=n-1开始遍历（c向左移动且`nums[b]+nums[c] > target`），当b==c是，双指针遍历结束。
+
+* java
+
+```java
+/**
+     * leetcode:排序+双指针
+     *
+     */
+public List<List<Integer>> threeSum(int[] nums) {
+    List<List<Integer>> res = new ArrayList<>();
+    Arrays.sort(nums);
+    int n = nums.length;
+    // 枚举 a
+    for (int a = 0; a < nums.length; a++) {
+        // 需要和上一次枚举的数不相同
+        if (a > 0 && nums[a - 1] == nums[a]) { // find next diff value
+            continue;
+        }
+        // c 对应的指针初始指向数组的最右端
+        int c = n - 1;
+        int target = -nums[a];
+        // 枚举 b
+        for (int b = a + 1; b < nums.length; b++) {
+            // 需要和上一次枚举的数不相同
+            if (b > a + 1 && nums[b] == nums[b - 1]) {
+                continue;
+            }
+            // 需要保证 b 的指针在 c 的指针的左侧
+            while (c > b && nums[b]+nums[c] > target) {
+                c--;
+            }
+            // 如果指针重合，随着 b 后续的增加
+            // 就不会有满足 a+b+c=0 并且 b<c 的 c 了，可以退出循环
+            if (b == c){
+                break;
+            }
+            if (nums[a]+nums[b]+nums[c] == 0) {
+                List<Integer> temp = new ArrayList<>();
+                temp.add(nums[a]);
+                temp.add(nums[b]);
+                temp.add(nums[c]);
+                res.add(temp);
+            }
+        }
+    }
+    return res;
+}
+```
+

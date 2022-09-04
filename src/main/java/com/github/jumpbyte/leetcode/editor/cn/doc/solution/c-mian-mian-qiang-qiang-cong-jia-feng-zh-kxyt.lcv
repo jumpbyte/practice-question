@@ -1,0 +1,38 @@
+### 解题思路
+
+他真的太极限了.jpg
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int len=nums.size();
+        vector<vector<int>> ans;
+        if(len<3) return ans;
+        sort(nums.begin(),nums.end());
+        set<vector<int>> se;
+        for(int i=0;i<len-2;i++){
+            if(nums[i]>0) break;
+            if(i&&nums[i]==nums[i-1]) continue;
+            for(int j=i+1;j<len-1;j++){
+                int pos=lower_bound(nums.begin()+j+1,nums.end(),-nums[i]-nums[j])-nums.begin();
+                if(pos<len&&nums[pos]==-nums[i]-nums[j]){
+                    vector<int> arr;
+                    arr.push_back(nums[i]);
+                    arr.push_back(nums[j]);
+                    arr.push_back(nums[pos]);
+                    se.insert(arr);
+                }
+            }
+        }
+        for(auto i:se)
+            ans.push_back(i);
+        return ans;
+    }
+};
+```
+

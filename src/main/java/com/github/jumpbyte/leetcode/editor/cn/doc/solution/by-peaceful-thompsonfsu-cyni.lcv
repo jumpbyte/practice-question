@@ -1,0 +1,61 @@
+解题思路：
+
+## 1.手撕快排+双指针
+
+时间复杂度n2，空间复杂度logn
+
+代码：
+
+* cpp
+
+```cpp
+class Solution {
+    void quickSort(vector<int>& nums, int startIndex, int endIndex) {
+        if (startIndex >= endIndex) return;
+        int x = rand() % (endIndex - startIndex + 1) + startIndex; // 随机数 0~n-1
+        swap(nums[startIndex], nums[x]); // 交换顺序
+        int num = nums[startIndex];
+        // 把比num小的放到前面，大的放到后面
+        int l = startIndex, r = endIndex;
+        while (l < r) {
+            while (l < r && nums[r] >= num) --r;
+            nums[l] = nums[r];
+            while (l < r && nums[l] <= num) ++l;
+            nums[r] = nums[l];
+        }
+        nums[l] = num;
+
+        quickSort(nums, startIndex, l - 1);
+        quickSort(nums, l + 1, endIndex);
+    }
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        quickSort(nums, 0, n - 1);
+        
+        vector<vector<int>> res;
+        for (int i = 0; i < n - 2; ++i) {
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i - 1]) continue; // 去重
+            int l = i + 1, r = n - 1;
+            while (l < r) {
+                if (nums[i] + nums[l] + nums[r] == 0) {
+                    res.push_back({nums[i], nums[l], nums[r]});
+                    ++l;
+                    --r;
+                    while (l < r && nums[l] == nums[l - 1]) ++l;
+                    while (l < r && nums[r] == nums[r + 1]) --r;
+                } else if (nums[i] + nums[l] + nums[r] > 0) {
+                    --r;
+                    while (l < r && nums[r] == nums[r + 1]) --r;
+                } else {
+                    ++l;
+                    while (l < r && nums[l] == nums[l - 1]) ++l;
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+

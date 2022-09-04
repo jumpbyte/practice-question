@@ -1,0 +1,83 @@
+# 一、双指针-快慢指针
+
+* []
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxConsecutiveOnes = function(nums) {
+  let ans = 0;
+
+  let slow = 0;
+
+  nums.forEach((num, fast) => {
+    if (num !== 1) {
+      ans = Math.max(ans, fast - slow);
+      slow = fast + 1;
+    }
+    if (fast === nums.length - 1 && num === 1) {
+      ans = Math.max(ans, fast - slow + 1);
+    }
+  })
+
+  return ans;
+};
+```
+
+# 二、栈
+
+* []
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxConsecutiveOnes = function(nums) {
+  let ans = 0;
+
+  let stack = [];
+
+  nums.forEach(num => {
+    if (num === 1) {
+      stack.push(num);
+    } else {
+      ans = Math.max(ans, stack.length);
+      stack = [];
+    }
+  })
+
+  return Math.max(ans, stack.length);
+};
+```
+
+# 三、一次遍历
+
+* []
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxConsecutiveOnes = function(nums) {
+  let ans = 0;
+
+  let currentCount = 0;
+  let length = nums.length - 1;
+
+  for (let i = 0; i <= length; i++) {
+    if (nums[i] === 1) {
+      currentCount++;
+    } else {
+      ans = Math.max(ans, currentCount);
+      currentCount = 0;
+    }
+  }
+
+  return Math.max(ans, currentCount);
+};
+```
+

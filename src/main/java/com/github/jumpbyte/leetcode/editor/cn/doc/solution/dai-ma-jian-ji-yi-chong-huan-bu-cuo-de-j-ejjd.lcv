@@ -1,0 +1,91 @@
+[详细刷题视频合集](https://xiaochen1024.com/series/6196129fc1553b002e57bef5/6196208ec1553b002e57bef6)      
+[刷题笔记](https://xiaochen1024.com/courseware/60b4f11ab1aa91002eb53b18)
+
+- 思路：用双指针遍历数组，left初始化在0号位置，right初始化在`nums.length`的位置，当`left<right`的时候循环数组
+  1. 当`nums[left] === val`的时候，用right-1的位置覆盖left的位置指向的元素，然后向左移动right
+  2. 当nums[left] !== val的时候，说明当前元素不需要覆盖，直接让`left++`
+- 复杂度：时间复杂度`O(n)`，数组遍历一遍。空间复杂度`O(1)`
+
+js：
+
+* js
+
+```js
+//方法1
+//例: [1,2,3,4,5]，  val=1
+//    [2,3,4,5,5]，  
+var removeElement = function(nums, val) {
+    const n = nums.length;
+    let left = 0;//left指针初始在0号位置
+    for (let right = 0; right < n; right++) {//用right指针循环数组
+        if (nums[right] !== val) {//当前元素不为val，则直接覆盖left位置的元素
+            nums[left] = nums[right];
+            left++;
+        }
+    }
+    return left;
+};
+
+//优化 题意是可以不考虑数组元素的顺序
+//当数组是[1,2,3,4,5]，需要删除的元素是1的时候，如果直接删除，则需要不断将1之后的元素都向前移动一位
+//当数组长度很大的时候比较消耗性能
+//我们我们直接让right初始化在nums.length的位置 left初始化在0号位置
+//当left<right的时候 循环数组
+//当nums[left] === val的时候，用right-1的位置覆盖left的位置指向的元素，然后向左移动right
+//当nums[left] !== val的时候，说明当前元素不需要覆盖，直接让left++
+
+//例: [1,2,3,4,5]，  val=1
+//		[5,2,3,4,5]
+var removeElement = function(nums, val) {
+    let left = 0, right = nums.length;
+    while (left < right) {
+        if (nums[left] === val) {
+            nums[left] = nums[right - 1];
+            right--;
+        } else {
+            left++;
+        }
+    }
+    return left;
+};
+
+```
+
+java：
+
+* java
+
+```java
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int n = nums.length;
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            if (nums[right] != val) {
+                nums[left] = nums[right];
+                left++;
+            }
+        }
+        return left;
+    }
+}
+
+//优化
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length;
+        while (left < right) {
+            if (nums[left] == val) {
+                nums[left] = nums[right - 1];
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return left;
+    }
+}
+
+```
+
