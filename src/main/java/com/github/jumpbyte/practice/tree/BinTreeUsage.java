@@ -81,6 +81,7 @@ public class BinTreeUsage {
      * @return
      */
     public static TreeNode<Integer> insert(Integer x, TreeNode<Integer> tree) {
+        ///若该树为空，生成并返回一个结点为一的二叉树
         if (tree == null) {
             TreeNode<Integer> newNode = new TreeNode<>();
             newNode.setVal(x);
