@@ -88,7 +88,7 @@ public class MaxHeap {
         for (parentIndex = 1; parentIndex * 2 <= this.size; parentIndex = childIndex) {
             //左儿子节点
             childIndex = 2 * parentIndex;
-            if (childIndex != this.size && this.elements[childIndex] < this.elements[parentIndex + 1]) {
+            if (childIndex != this.size && this.elements[childIndex] < this.elements[childIndex + 1]) {
                 //childIndex指问左右子结点的较大者
                 childIndex++;
             }

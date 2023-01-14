@@ -1,5 +1,9 @@
 package com.github.jumpbyte.practice.tree;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * @author yuanjinan
  */
@@ -81,4 +85,170 @@ public class TreeOperation {
             System.out.println(sb);
         }
     }
+
+
+    /**
+     * 先序遍历
+     */
+    public static void preVisit(TreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        System.out.println(root.getVal());
+        preVisit(root.left);
+        preVisit(root.right);
+    }
+
+    /**
+     * 中序遍历
+     *
+     * @param root
+     */
+    public static void midVisit(TreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        midVisit(root.left);
+        System.out.println(root.getVal());
+        midVisit(root.right);
+    }
+
+
+    /**
+     * 后序遍历
+     *
+     * @param root
+     */
+    public static void backVisit(TreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        backVisit(root.left);
+        backVisit(root.right);
+        System.out.println(root.getVal());
+    }
+
+
+    /**
+     * 先序遍历(非递归)，堆栈思想
+     *
+     * @param root
+     */
+    public static void preVisitNoRecursive(TreeNode<Integer> root) {
+        Stack<TreeNode<Integer>> stack = new Stack<>();
+        TreeNode<Integer> tmpTreeNode = root;
+        while (tmpTreeNode != null || !stack.isEmpty()) {
+            while (tmpTreeNode != null) {
+                //一直向左，并将沿途的节点压入堆栈
+                System.out.println(tmpTreeNode.getVal());
+                stack.push(tmpTreeNode);
+                tmpTreeNode = tmpTreeNode.left;
+            }
+            if (!stack.isEmpty()) {
+                tmpTreeNode = stack.pop();
+                tmpTreeNode = tmpTreeNode.right;
+            }
+        }
+    }
+
+    /**
+     * 中序遍历(非递归)，堆栈思想
+     *
+     * @param root
+     */
+    public static void midVisitNoRecursive(TreeNode<Integer> root) {
+        Stack<TreeNode<Integer>> stack = new Stack<>();
+        TreeNode<Integer> tmpTreeNode = root;
+        while (tmpTreeNode != null || !stack.isEmpty()) {
+            while (tmpTreeNode != null) {
+                //一直向左，并将沿途的节点压入堆栈
+                stack.push(tmpTreeNode);
+                tmpTreeNode = tmpTreeNode.left;
+            }
+            if (!stack.isEmpty()) {
+                tmpTreeNode = stack.pop();
+                System.out.println(tmpTreeNode.getVal());
+                //转向该节点右子树
+                tmpTreeNode = tmpTreeNode.right;
+            }
+        }
+    }
+
+    /**
+     * 后序遍历(非递归)，堆栈思想
+     *
+     * @param root
+     */
+    public static void backVisitNoRecursive(TreeNode<Integer> root) {
+        Stack<TreeNode<Integer>> stack = new Stack<>();
+        TreeNode<Integer> currentNode = root;
+        //记录最近一次被访问的节点
+        TreeNode<Integer> visitedNode = root;
+        while (currentNode != null || !stack.isEmpty()) {
+            while (currentNode != null) {
+                //一直向左，并将沿途的节点压入堆栈
+                stack.push(currentNode);
+                currentNode = currentNode.left;
+            }
+            //先拿出栈顶节点(不出栈)
+            currentNode = stack.peek();
+            //如果栈顶节点有右子树，且未被访问过，继续入栈右子树
+            if (currentNode.right != null && currentNode.right != visitedNode) {
+                currentNode = currentNode.right;
+            } else {
+                //子树为空或未被访问过
+                //访问节点
+                System.out.println(currentNode.getVal());
+                //记录最近一次访问的的节点
+                visitedNode = currentNode;
+                //当前节点置Null防止下个循环重复入栈
+                currentNode = null;
+                stack.pop();
+            }
+        }
+    }
+
+    /**
+     * 层序遍历(BFS 广度优先遍历)
+     *
+     * @param root
+     */
+    public static void levelOrderVisit(TreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        Queue<TreeNode<Integer>> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode<Integer> treeNode = queue.poll();
+            System.out.println(treeNode.getVal());
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+        }
+    }
+
+    /**
+     * 二叉树的高度
+     *
+     * @param root
+     * @return
+     */
+    public static Integer getHeight(TreeNode<Integer> root) {
+        int lH, rH, maxH;
+        if (root != null) {
+            //递归求左子树的高度
+            lH = getHeight(root.left);
+            //递归求右子树的高度
+            rH = getHeight(root.right);
+            maxH = Math.max(lH, rH);
+            return maxH + 1;
+        }
+        return 0;
+    }
+
+
 }
