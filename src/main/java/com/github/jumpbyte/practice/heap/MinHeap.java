@@ -1,11 +1,11 @@
 package com.github.jumpbyte.practice.heap;
 
 /**
- * 最大堆
+ * 最小堆
  *
  * @author yuanjinan
  */
-public class MaxHeap {
+public class MinHeap {
 
     private int[] elements;
 
@@ -41,11 +41,11 @@ public class MaxHeap {
      *
      * @param capacity
      */
-    public MaxHeap(int capacity) {
+    public MinHeap(int capacity) {
         this.capacity = capacity;
-        //最大堆 0 位置预留，从1开始存储元素
+        //最小堆 0 位置预留，从下标1开始存储元素
         this.elements = new int[capacity + 1];
-        this.elements[0] = Integer.MAX_VALUE;
+        this.elements[0] = Integer.MIN_VALUE;
     }
 
     /**
@@ -62,8 +62,8 @@ public class MaxHeap {
         }
         //i指向插入堆的最后一个元素位置下标
         i = ++this.size;
-        for (; elements[i / 2] < item; i = i / 2) {
-            //如果插入位置i的父节点比插入元素值item小，则将父节点插入到i
+        for (; elements[i / 2] > item; i = i / 2) {
+            //如果插入位置i的父节点比插入元素值item大，则i位置的父节点下去，移动到i位置
             this.elements[i] = elements[i / 2];
         }
         //找到位置i插入
@@ -71,25 +71,25 @@ public class MaxHeap {
     }
 
     /**
-     * 取出根结点（最大值）元素，同时删除堆的一个结点 复杂度：O(log2(n))
-     * 说明：同最大堆的插入操作类似，同样包含n个元素的最大堆，其高度为:log2(n+1)，其时间复杂度为：O(log2(n))
+     * 取出根结点（最小值）元素，同时删除堆的一个结点
+     * 说明：同最小堆的插入操作类似，同样包含n个元素的最小堆，其高度为:log2(n+1)，其时间复杂度为：O(log2(n))
      * @return
      */
-    public int deleteMax() {
+    public int deleteMin() {
         int parentIndex, childIndex;
-        int maxItem, tmp;
+        int minItem, tmp;
         if (isEmpty()) {
             System.out.println("堆已空");
             return -1;
         }
-        maxItem = this.elements[1];
-        //用最大堆中最后一个元素从根结点开始向上过滤下层结点
+        minItem = this.elements[1];
+        //用最小堆中最后一个元素从根结点开始向上过滤下层结点
         tmp = this.elements[this.size--];
         for (parentIndex = 1; parentIndex * 2 <= this.size; parentIndex = childIndex) {
             //左儿子节点
             childIndex = 2 * parentIndex;
-            if (childIndex != this.size && this.elements[childIndex] < this.elements[childIndex + 1]) {
-                //childIndex指问左右子结点的较大者
+            if (childIndex != this.size && this.elements[childIndex] > this.elements[childIndex + 1]) {
+                //childIndex指问左右子结点的较小者
                 childIndex++;
             }
             if (tmp >= this.elements[childIndex]) {
@@ -99,7 +99,7 @@ public class MaxHeap {
             }
         }
         this.elements[parentIndex] = tmp;
-        return maxItem;
+        return minItem;
 
     }
 
@@ -115,30 +115,6 @@ public class MaxHeap {
     public boolean isEmpty() {
         return this.size == 0;
     }
-
-    /**
-     * 按照输入的元素创建一个二叉树
-     * @param items
-     * @return
-     */
-    public MaxHeap createBinaryTree(int[] items){
-        MaxHeap maxHeap = new MaxHeap(1000);
-        for (int i = 0; i < items.length; i++) {
-            maxHeap.elements[i+1] = items[i];
-            maxHeap.size++;
-        }
-        return maxHeap;
-    }
-
-    /**
-     * 创建最大堆
-     * @return
-     */
-    public  static  MaxHeap  createMaxHeap(){
-
-        return null;
-    }
-
 
 
 }
