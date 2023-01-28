@@ -1,5 +1,7 @@
 package com.github.jumpbyte.practice.heap;
 
+import java.util.Arrays;
+
 /**
  * 最大堆
  *
@@ -48,6 +50,9 @@ public class MaxHeap {
         this.elements[0] = Integer.MAX_VALUE;
     }
 
+    public MaxHeap() {
+    }
+
     /**
      * 插入一个元素 复杂度 O(logN)
      * 说明：由于堆是一棵完全二叉树，存在n个元素，那么他的高度为:log2(n+1)，这就说明代码中的for循环会执行O(log2(n))次。因此插入函数的时间复杂度为：O(log2(n))
@@ -62,7 +67,7 @@ public class MaxHeap {
         }
         //i指向插入堆的最后一个元素位置下标
         i = ++this.size;
-        for (; elements[i / 2] < item; i = i / 2) {
+        for (; i>0 && elements[i / 2] < item; i = i / 2) {
             //如果插入位置i的父节点比插入元素值item小，则将父节点插入到i
             this.elements[i] = elements[i / 2];
         }
@@ -117,26 +122,63 @@ public class MaxHeap {
     }
 
     /**
-     * 按照输入的元素创建一个二叉树
+     * 创建一个大顶堆
      * @param items
      * @return
      */
-    public MaxHeap createBinaryTree(int[] items){
-        MaxHeap maxHeap = new MaxHeap(1000);
+    public MaxHeap creatMaxHeap(int[] items){
+        this.elements = new int[items.length+1];
+        this.capacity = items.length * 2;
         for (int i = 0; i < items.length; i++) {
-            maxHeap.elements[i+1] = items[i];
-            maxHeap.size++;
+            this.elements[i+1] = items[i];
+             this.size++;
         }
-        return maxHeap;
+        for (int parent = this.size/2; parent >=1; parent--) {
+            shiftDown(parent,this.size);
+        }
+        return this;
     }
 
     /**
-     * 创建最大堆
-     * @return
+     * 下沉调整
+     * @param parent 父节点位置
+     * @param size 元素总个数
      */
-    public  static  MaxHeap  createMaxHeap(){
+    public  void  shiftDown(int parent,int size){
+        int child = parent * 2;
+        while (child <= size){
+            if(child + 1 <= size && elements[child] < elements[child+1]){
+                child ++;
+            }
+            if(elements[parent] < elements[child]){
+                int tmp = elements[child];
+                elements[child] = elements[parent];
+                elements[parent] = tmp;
+            }else {
+                break;
+            }
+            parent = child;
+            child = parent * 2;
+        }
+    }
 
-        return null;
+    private  void  heepSort(){
+        int end = size;
+        while (end>1){
+            int tmp = elements[1];
+            elements[1] = elements[end];
+            elements[end] = tmp;
+            end -- ;
+            shiftDown(1,end);
+        }
+    }
+
+    public static void main(String[] args) {
+        MaxHeap maxHeap = new MaxHeap();
+        maxHeap.creatMaxHeap(new int[]{4,6,7,10,20,15,34,42,24,35,78});
+        System.out.println(Arrays.toString(maxHeap.elements));
+        maxHeap.heepSort();
+        System.out.println(Arrays.toString(maxHeap.elements));
     }
 
 

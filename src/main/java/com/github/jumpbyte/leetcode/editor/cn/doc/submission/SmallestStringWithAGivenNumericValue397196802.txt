@@ -1,0 +1,16 @@
+class Solution {
+
+    public String getSmallestString(int n, int k) {
+        char[] chars = new char[n];
+        Arrays.fill(chars,'a');
+        int i = n - 1, l = k-n;
+        for(;l>25;l-=25){
+            chars[i--]= 'z';
+        }
+        chars[i]=(char)('a'+l);
+        return  String.valueOf(chars);
+    }
+}
+
+//runtime:9 ms
+//memory:41.3 MB

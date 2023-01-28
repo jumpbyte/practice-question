@@ -1,0 +1,71 @@
+### 解题思路
+
+模拟：将数组全部填充为 `a`，贪心的从末尾开始向前填充最大的字母，直到达到字符串数值，最后将数组合并为字符串。
+数学：计算末端 `z` 的总数，和需要填充 `z`前面的非 `z` 字符，除此之外其余字符全部是 `a`。
+
+![Screenshot 2023-01-26 at 15.33.40.png](https://pic.leetcode.cn/1674718526-SowDdN-Screenshot%202023-01-26%20at%2015.33.40.png)
+
+![Screenshot 2023-01-26 at 14.36.15.png](https://pic.leetcode.cn/1674718529-NlhVxM-Screenshot%202023-01-26%20at%2014.36.15.png)
+
+### 模拟
+
+* []
+
+```Rust
+impl Solution {
+    pub fn get_smallest_string(mut n: i32, mut k: i32) -> String {
+        let mut ch_arr = vec!['a'; n as usize];
+        k -= n;
+        while k > 0 {
+            let curr = k.min(25);
+            n -= 1;
+            ch_arr[n as usize] = (ch_arr[n as usize] as u8 + curr as u8) as char;
+            k -= curr;
+        }
+        ch_arr.iter().collect::<_>()
+    }
+}
+```
+
+* []
+
+```Java
+class Solution {
+    public String getSmallestString(int n, int k) {
+        char[] chArr = new char[n];
+        Arrays.fill(chArr, 'a');
+        k -= n;
+        while (k > 0 && k > 0) {
+            int curr = Math.min(25, k);
+            chArr[--n] += curr;
+            k -= curr;
+        }
+        return String.valueOf(chArr);
+    }
+}
+```
+
+### 数学
+
+* []
+
+```Rust
+impl Solution {
+    pub fn get_smallest_string(mut n: i32, mut k: i32) -> String {
+        let (z, r) = ((k - n) / 25, (k - n) % 25);
+        format!("{}{}", if z == n { "".to_string() } else { format!("{}{}", "a".repeat((n - z - 1) as usize), (b'a' + r as u8) as char) }, "z".repeat(z as usize))
+    }
+}
+```
+
+* []
+
+```Java
+class Solution {
+    public String getSmallestString(int n, int k) {
+        int z = (k - n) / 25, r = (k - n) % 25;
+        return (z == n ? "" : "a".repeat(n - z - 1) + (char) ('a' + r)) + "z".repeat(z);
+    }
+}
+```
+

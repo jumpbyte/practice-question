@@ -1,0 +1,38 @@
+* 
+
+```
+//greedy
+//try to put as many 'z' as possible at the end of the string
+//till the remaining string is still possible to be constructed to fulfill the sum of (k - 26*...)
+
+class Solution {
+public:
+    string getSmallestString(int n, int k) {
+        vector<int> ansnum(n, 1);
+        int rem = k;
+        int j = n - 1, i = 0;
+        while (rem >= (j + 26) && i < j)
+        {
+            rem -= 26;
+            ansnum[j--] = 26;
+        }
+
+        string ans(n, 'a');
+        while (i < j)
+        {
+            ansnum[i++] = 1;
+            rem--;
+        }
+        ansnum[i] = rem;
+
+        ans[i] = 'a' + rem - 1;
+        for (int m = i + 1; m < n; m++)
+        {
+            ans[m] = 'z';
+        }
+
+        return ans;
+    }
+};
+```
+

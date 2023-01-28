@@ -92,7 +92,7 @@ public class MinHeap {
                 //childIndex指问左右子结点的较小者
                 childIndex++;
             }
-            if (tmp >= this.elements[childIndex]) {
+            if (tmp <= this.elements[childIndex]) {
                 break;
             } else {
                 this.elements[parentIndex] = this.elements[childIndex];
