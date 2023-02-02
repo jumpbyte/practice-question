@@ -1,0 +1,115 @@
+* 
+
+```
+ List<ListNode> listNodes = new ArrayList<>();
+        int sum = 0;
+        boolean flag = false; // 表示是否进位
+        while (l1 != null && l2 != null){
+            if (flag == true){
+                sum = l1.val+l2.val+1;
+                flag = false;
+            } else {
+                sum = l1.val+l2.val;
+            }
+            if (sum >= 10){
+                // 此时要进位
+                flag = true;
+                int i = Integer.parseInt(String.valueOf(sum).substring(1));
+                ListNode listNode = new ListNode(i);
+                listNodes.add(listNode);
+            } else {
+                ListNode listNode = new ListNode(sum);
+                listNodes.add(listNode);
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+
+
+        if (l1 == null && l2 == null){
+            if (flag == true){
+                ListNode listNode = new ListNode(1);
+                listNodes.add(listNode);
+            }
+        }
+
+        if (l1 != null){
+            while(l1 != null){
+                if (flag){
+                    sum = l1.val + 1;
+                    if (l1.next == null){
+                        if (sum >= 10){
+                            ListNode listNode0 = new ListNode(0);
+                            ListNode listNode1 = new ListNode(1);
+                            listNodes.add(listNode0);
+                            listNodes.add(listNode1);
+                        } else {
+                            ListNode listNode = new ListNode(sum);
+                            listNodes.add(listNode);
+                        }
+                    } else {
+                        if (sum >= 10){
+                            flag = true;
+                            int i = Integer.parseInt(String.valueOf(sum).substring(1));
+                            ListNode listNode = new ListNode(i);
+                            listNodes.add(listNode);
+                        } else {
+                            ListNode listNode = new ListNode(sum);
+                            listNodes.add(listNode);
+                            flag = false;
+                        }
+                    }
+                } else {
+                    ListNode listNode = new ListNode(l1.val);
+                    listNodes.add(listNode);
+                }
+                l1 = l1.next;
+            }
+        }
+
+        if (l2 != null){
+            while(l2 != null){
+                if (flag){
+                    sum = l2.val + 1;
+                    if (l2.next == null){
+                        if (sum >= 10){
+                            ListNode listNode0 = new ListNode(0);
+                            ListNode listNode1 = new ListNode(1);
+                            listNodes.add(listNode0);
+                            listNodes.add(listNode1);
+                        } else {
+                            ListNode listNode = new ListNode(sum);
+                            listNodes.add(listNode);
+                        }
+                    } else {
+                        if (sum >= 10){
+                            flag = true;
+                            int i = Integer.parseInt(String.valueOf(sum).substring(1));
+                            ListNode listNode = new ListNode(i);
+                            listNodes.add(listNode);
+                        } else {
+                            ListNode listNode = new ListNode(sum);
+                            listNodes.add(listNode);
+                            flag = false;
+                        }
+                    }
+                } else {
+                    ListNode listNode = new ListNode(l2.val);
+                    listNodes.add(listNode);
+                }
+                l2 = l2.next;
+            }
+        }
+
+
+        for (int i = 0; i < listNodes.size(); i++){
+
+            if (i == listNodes.size() -1){
+                break;
+            }
+            listNodes.get(i).next = listNodes.get(i+1);
+
+        }
+        return listNodes.get(0);
+```
+
