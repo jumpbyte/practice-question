@@ -1,8 +1,9 @@
 package com.github.jumpbyte.practice.unionfind;
 
 /**
- * 并查集简化实现 - 按秩归并 树高 或 元素个数 针对union优化
+ * 并查集查询优化 - 按秩归并 树高 或 元素个数  针对union优化
  * 思想：任何有限集合(N个)元素都可以被一一映射为整数0到N-1，因此可以利用数组的下标和元素值形成某种映射，摒弃原来的SetNode的数据域
+ *
  * @className: UnionFindV3
  * @author: yuanjinan
  * @create: 2023/01/24
@@ -20,19 +21,16 @@ public class UnionFindV3 {
     }
 
     /**
-     * 查找x所属根元素的下标(查找x属于哪一个集合),路径压缩
+     * 查找x所属根元素的下标(查找x属于哪一个集合)
      * @param x
      * @return
      */
-    public int find(int x){
-        if(data==null || data.length==0){
-            return  -1;
+    public int find(int x) {
+        if (data == null || data.length == 0) {
+            return -1;
         }
-        if(data[x] < 0){
-            return x;
-        }else {
-            return data[x] = find(data[x]);
-        }
+        for (; data[x] >= 0; x = data[x]) ;
+        return x;
     }
 
     /**
@@ -58,13 +56,15 @@ public class UnionFindV3 {
         }
     }
 
-    public int getSetCount(){
-        int count=0;
+    public int getSetCount() {
+        int count = 0;
         for (int i = 0; i < data.length; i++) {
-             if(data[i]<0){
-                 count++;
-             }
+            if (data[i] < 0) {
+                count++;
+            }
         }
+        // 1+2+ ... + ()
+        // (i+1) * i / 2 + j
         return count;
     }
 

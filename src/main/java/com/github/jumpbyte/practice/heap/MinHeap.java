@@ -49,8 +49,9 @@ public class MinHeap {
     }
 
     /**
-     * 插入一个元素 复杂度 O(logN)
+     * 插入一个元素 复杂度 O(logN)  - 上浮调整
      * 说明：由于堆是一棵完全二叉树，存在n个元素，那么他的高度为:log2(n+1)，这就说明代码中的for循环会执行O(log2(n))次。因此插入函数的时间复杂度为：O(log2(n))
+     *
      * @param item
      */
     public void insert(int item) {
@@ -71,7 +72,7 @@ public class MinHeap {
     }
 
     /**
-     * 取出根结点（最小值）元素，同时删除堆的一个结点
+     * 取出根结点（最小值）元素，同时删除堆的一个结点 - 下沉调整
      * 说明：同最小堆的插入操作类似，同样包含n个元素的最小堆，其高度为:log2(n+1)，其时间复杂度为：O(log2(n))
      * @return
      */
@@ -83,7 +84,7 @@ public class MinHeap {
             return -1;
         }
         minItem = this.elements[1];
-        //用最小堆中最后一个元素从根结点开始向上过滤下层结点
+        //用最小堆中最后一个元素临时替代根结点，然后开始从上往下调整 进行对节点进行下沉调整
         tmp = this.elements[this.size--];
         for (parentIndex = 1; parentIndex * 2 <= this.size; parentIndex = childIndex) {
             //左儿子节点

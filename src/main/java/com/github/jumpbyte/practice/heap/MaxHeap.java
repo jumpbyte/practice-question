@@ -88,7 +88,7 @@ public class MaxHeap {
             return -1;
         }
         maxItem = this.elements[1];
-        //用最大堆中最后一个元素从根结点开始向上过滤下层结点
+        //用最大堆中最后一个元素临时占领根结点，然后开始从上往下调整，对各节点进行下沉调整
         tmp = this.elements[this.size--];
         for (parentIndex = 1; parentIndex * 2 <= this.size; parentIndex = childIndex) {
             //左儿子节点
@@ -148,6 +148,7 @@ public class MaxHeap {
         int child = parent * 2;
         while (child <= size){
             if(child + 1 <= size && elements[child] < elements[child+1]){
+                //指向左右孩子最大的一个
                 child ++;
             }
             if(elements[parent] < elements[child]){

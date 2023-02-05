@@ -1,8 +1,9 @@
 package com.github.jumpbyte.practice.unionfind;
 
 /**
- * 并查集查询优化 - 按秩归并 + 路径压缩 针对find进行优化
+ * 并查集简化实现 - 路径压缩 针对find优化
  * 思想：任何有限集合(N个)元素都可以被一一映射为整数0到N-1，因此可以利用数组的下标和元素值形成某种映射，摒弃原来的SetNode的数据域
+ *
  * @className: UnionFindV4
  * @author: yuanjinan
  * @create: 2023/01/24
@@ -20,16 +21,19 @@ public class UnionFindV4 {
     }
 
     /**
-     * 查找x所属根元素的下标(查找x属于哪一个集合)
+     * 查找x所属根元素的下标(查找x属于哪一个集合),路径压缩
      * @param x
      * @return
      */
-    public int find(int x){
-        if(data==null || data.length==0){
-            return  -1;
+    public int find(int x) {
+        if (data == null || data.length == 0) {
+            return -1;
         }
-        for (; data[x]>=0;x=data[x]);
-        return x;
+        if (data[x] < 0) {
+            return x;
+        } else {
+            return data[x] = find(data[x]);
+        }
     }
 
     /**
