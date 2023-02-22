@@ -5,26 +5,26 @@ package com.github.jumpbyte.practice.linklist;
  *
  * @author yuanjinan
  */
-public class MyLinkedNode<T> {
+public class ListNode<T> {
 
-    private T data;
+    private T val;
 
-    MyLinkedNode<T> next;
+    ListNode<T> next;
 
 
-    public T getData() {
-        return data;
+    public T getVal() {
+        return val;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setVal(T val) {
+        this.val = val;
     }
 
-    public MyLinkedNode<T> getNext() {
+    public ListNode<T> getNext() {
         return next;
     }
 
-    public void setNext(MyLinkedNode<T> next) {
+    public void setNext(ListNode<T> next) {
         this.next = next;
     }
 
@@ -34,7 +34,7 @@ public class MyLinkedNode<T> {
      * @return
      */
     public int length() {
-        MyLinkedNode<T> node = this;
+        ListNode<T> node = this;
         int j = 0;
         while (node != null) {
             j++;
@@ -49,8 +49,8 @@ public class MyLinkedNode<T> {
      * @param k
      * @return
      */
-    public MyLinkedNode<T> findKth(int k) {
-        MyLinkedNode<T> p = this;
+    public ListNode<T> findKth(int k) {
+        ListNode<T> p = this;
         int i = 1;
         while (i < k && p != null) {
             i++;
@@ -63,14 +63,35 @@ public class MyLinkedNode<T> {
     }
 
     /**
+     * 查找倒数第k个节点
+     * 思路：假设链表长度是n,倒数第k个节点也就是正数第n-k+1,先用一个指针p1让其先走k步，然后再用一个指针p2指向头节点，让p1,p2一起往前走直到p1走完
+     * 此时，p2刚好走了n-k+1步
+     * @param k
+     * @return
+     */
+    public ListNode<T>  findBackKth(ListNode head, int k){
+         ListNode p1 = head;
+        for (int i = 0; i < k; i++) {
+            p1= p1.next;
+        }
+        ListNode p2 = head;
+        while (p1 != null) {
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        return p2;
+    }
+
+
+    /**
      * 按照值查找
      *
      * @param targetVal
      * @return
      */
-    public MyLinkedNode<T> find(T targetVal) {
-        MyLinkedNode<T> p = this;
-        while (p != null && p.data != targetVal) {
+    public ListNode<T> find(T targetVal) {
+        ListNode<T> p = this;
+        while (p != null && p.val != targetVal) {
             p = p.next;
         }
         return p;
@@ -84,12 +105,12 @@ public class MyLinkedNode<T> {
      * @param link
      * @return
      */
-    public static <T> MyLinkedNode<T> insert(T value, int i, MyLinkedNode<T> link) {
-        MyLinkedNode<T> p;
-        MyLinkedNode<T> newNode;
+    public static <T> ListNode<T> insert(T value, int i, ListNode<T> link) {
+        ListNode<T> p;
+        ListNode<T> newNode;
         if (i == 1) {
-            newNode = new MyLinkedNode<>();
-            newNode.setData(value);
+            newNode = new ListNode<>();
+            newNode.setVal(value);
             newNode.setNext(link);
             return newNode;
         }
@@ -98,8 +119,8 @@ public class MyLinkedNode<T> {
             System.out.println("插入位置i不存在");
             return null;
         }
-        newNode = new MyLinkedNode<>();
-        newNode.setData(value);
+        newNode = new ListNode<>();
+        newNode.setVal(value);
         newNode.setNext(p.next);
         p.setNext(newNode);
         return newNode;
@@ -113,8 +134,8 @@ public class MyLinkedNode<T> {
      * @param <T>
      * @return
      */
-    public static <T> MyLinkedNode<T> delete(int i, MyLinkedNode<T> link) {
-        MyLinkedNode<T> p;
+    public static <T> ListNode<T> delete(int i, ListNode<T> link) {
+        ListNode<T> p;
         if (i == 1) {
             p = link.next;
             link.next = null;
@@ -125,7 +146,7 @@ public class MyLinkedNode<T> {
             System.out.println("删除位置错误");
             return null;
         } else {
-            MyLinkedNode<T> s = p.next;
+            ListNode<T> s = p.next;
             p.setNext(s.next);
             s.next = null;
             return link;

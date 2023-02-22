@@ -82,7 +82,7 @@ public class ReverseLinkedListIi {
 
         public ListNode reverseBetween(ListNode head, int left, int right) {
             if (left == 1) {
-                //left=1 说明走到了链表正数第left个位置的节点，而此时的right就是left-right中间节点要反转的节点个数
+                //left=1 说明走到了链表正数第left个位置的节点，而此时的right就是left-right之间要反转的节点个数
                 return reverseN(head, right);
             }
             //head.next 一直往前走，走了left位置 也就是left=1时，此时问题转化为对前n个节点进行反转的问题
