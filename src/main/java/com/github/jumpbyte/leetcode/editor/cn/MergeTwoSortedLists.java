@@ -80,29 +80,29 @@ public class MergeTwoSortedLists {
          * @param list2
          * @return
          */
-        public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-            ListNode dummy  = new ListNode(-1);
-            ListNode p1 = list1,p2=list2,p= dummy;
-            while (p1!=null && p2!=null){
-                if(p1.val > p2.val){
-                    p.next = p2;
-                    p2 = p2.next;
-                }else {
-                    p.next = p1;
-                    p1 = p1.next;
-                }
-                p=p.next;
-            }
-            //最后接上还有剩余的链表
-            if(p1 != null){
-                p.next = p1;
-            }
-            if(p2 != null){
-                p.next = p2;
-            }
-            return dummy.next;
+public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    ListNode dummy  = new ListNode(-1);
+    ListNode p1 = list1,p2=list2,p= dummy;
+    while (p1!=null && p2!=null){
+        if(p1.val > p2.val){
+            p.next = p2;
+            p2 = p2.next;
+        }else {
+            p.next = p1;
+            p1 = p1.next;
         }
+        p=p.next;
     }
+    //最后接上还有剩余的链表
+    if(p1 != null){
+        p.next = p1;
+    }
+    if(p2 != null){
+        p.next = p2;
+    }
+    return dummy.next;
+}
+}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }

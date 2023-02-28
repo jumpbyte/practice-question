@@ -60,7 +60,7 @@ public class CarPooling {
                 //要上车的乘客数量
                 int num = trip[0];
                 int from = trip[1];
-                //第 trip[2] 站乘客已经下车
+                //第 trip[2] 站乘客已经下
                 //即乘客在车上的区间是 [trip[1], trip[2] - 1]
                 int to = trip[2] -1;
                 diff.increment(from,to,num);
