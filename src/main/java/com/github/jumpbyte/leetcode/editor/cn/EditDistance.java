@@ -64,9 +64,51 @@ public class EditDistance {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
 
+
+        /**
+         * dp 解法 自底向上求解
+         * @param word1
+         * @param word2
+         * @return
+         */
+        public int minDistance(String word1, String word2) {
+            int m  = word1.length() ,n = word2.length();
+            //定义：s1[0..i] 和 s2[0..j] 的最小编辑距离是 dp[i+1][j+1]
+            int[][] dp = new int[m+1][n+1];
+            for (int i = 1; i <= m; i++) {
+                dp[i][0] = i;
+            }
+            for (int j = 1; j <= n; j++) {
+                dp[0][j] = j;
+            }
+            // 自底向上求解
+            for (int i = 1; i <= m; i++) {
+                for (int j = 1; j <= n; j++) {
+                    if (word1.charAt(i-1) == word2.charAt(j-1)) {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    } else {
+                        //做选择 取插入 删除 替换操作步数最小的
+                        dp[i][j] = min(
+                                dp[i - 1][j] + 1,
+                                dp[i][j - 1] + 1,
+                                dp[i - 1][j - 1] + 1
+                        );
+                    }
+                }
+            }
+            // 储存着整个 s1 和 s2 的最小编辑距离
+            return dp[m][n];
+        }
+
         //备忘录
         int[][] memo;
-        public int minDistance(String word1, String word2) {
+        /**
+         * 递归 dp 解法 ，自顶向下求解
+         * @param word1
+         * @param word2
+         * @return
+         */
+        public int minDistanceRecursion(String word1, String word2) {
             int m  = word1.length() ,n = word2.length();
             memo = new int[m][n];
             for (int[] row : memo) {
@@ -75,6 +117,14 @@ public class EditDistance {
             return dp(word1,m-1,word2,n-1);
         }
 
+        /**
+         *  定义：返回 s1[0..i] 和 s2[0..j] 的最小编辑距离
+         * @param s1
+         * @param i
+         * @param s2
+         * @param j
+         * @return
+         */
         public int dp(String s1,int i,String s2,int j){
             if(i== -1) {
                  //说明s1走完了 可把剩下的s2字符一个个插入到s1中即可 所以需要j+1步插入操作
