@@ -68,6 +68,7 @@
  public class MinimumWindowSubstring{
       public static void main(String[] args) {
            Solution solution = new MinimumWindowSubstring().new Solution();
+           solution.minWindow("ADOBECODEBANC","ABC");
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
@@ -84,21 +85,23 @@ class Solution {
         //窗口起止位置，注意是左闭右开区间[left,right) 方便后续处理
         int left = 0, right = 0;
         for (char c : t.toCharArray()) {
-            needs.put(c,1);
+            needs.put(c,needs.getOrDefault(c,0)+1);
         }
         while (right < s.length()){
             //c 是将移入窗口的字符
             char c = s.charAt(right);
-            //右移窗口
+            //右移窗口[left,right)
             right++;
             if(needs.containsKey(c)){
                 // 进行窗口内数据的一系列更新
                 window.put(c,window.getOrDefault(c,0)+1);
                 if(window.get(c).intValue() == needs.get(c).intValue()){
-                    //c第一次出现在窗口内时，目标出现字符个数计数加1，保证同一个字符多次只累加1次
+                    //满足一个目标字符出现次数，匹配字符种类加一
                     validCount ++;
                 }
             }
+//            System.out.printf("字符:%s进入窗口window:[%s,%s)  validCount:%s\n",c,left,right,validCount);
+//            System.out.println("len:"+len+"窗口数据:"+window);
             while (validCount == needs.size()){
                 // 在这里更新最小覆盖子串
                 if(right - left < len){
@@ -110,18 +113,22 @@ class Solution {
                 char d = s.charAt(left);
                 //左移窗口
                 left ++ ;
+//                if(!needs.containsKey(d)){
+//                    System.out.printf("字符:%s,离开窗口,window:[%s,%s)\n",d,left,right);
+//                }
                 // 进行窗口内数据的一系列更新
                 if(needs.containsKey(d)){
                     if(Objects.equals(window.get(d), needs.get(d))){
-                        //当某个字符最后离开窗口，目标出现字符个数计数减一
+                        //离开窗口的这个字符 不再满足目标字符出现次数，匹配字符种类要减一
                         validCount--;
+                       // System.out.printf("字符:%s 离开窗口window:[%s,%s)，validCount:%s,start:%s\n",d,left,right,validCount,start);
                     }
                     //移出窗口，出现次数减一
                     window.put(d,window.get(d)-1);
                 }
             }
         }
-        return  len == Integer.MAX_VALUE ? "": s.substring(start,len);
+        return  len == Integer.MAX_VALUE ? "": s.substring(start,start+len);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
