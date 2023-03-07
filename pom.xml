@@ -32,5 +32,10 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.46.Final</version>
         </dependency>
+        <dependency>
+            <groupId>cn.adalab</groupId>
+            <artifactId>leetcode-helpers</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 </project>

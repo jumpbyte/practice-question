@@ -28,7 +28,7 @@ public class PreSumArray {
      */
     public int  sumRange(int left ,int right){
         //注意：这里是left，right是原nums数组的下标,求[left,right]的累加和，也就是nums[0,right]累加和 - nums[0,left-1]累加和
-        //nums[0,right]累加和对应preSum的下标是right+1, nums[0,left-1]累加和对应preSum的下标left
+        //因为preSum[i]记录的是nums[0,i-1]累加和，所以nums[0,right]累加和对应preSum[right+1], nums[0,left-1]累加和对应preSum[left]
         return preSum[right + 1] - preSum[left];
     }
 }

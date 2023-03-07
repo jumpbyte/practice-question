@@ -8,15 +8,15 @@ public class TreeNode<T> {
     /**
      * 值
      */
-    T val;
+    public T val;
     /**
      * 左节点
      */
-    TreeNode<T> left;
+    public TreeNode<T> left;
     /**
      * 右节点
      */
-    TreeNode<T> right;
+    public TreeNode<T> right;
 
     public T getVal() {
         return val;

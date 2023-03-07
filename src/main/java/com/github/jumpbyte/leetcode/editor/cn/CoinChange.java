@@ -64,7 +64,7 @@ class Solution {
         //base case dp[0] = 0;
         dp[0] = 0;
         //外层 for 循环在遍历所有状态的所有取值
-        for (int i = 0; i < dp.length; i++) {
+        for (int i = 1; i < dp.length; i++) {
             //内层 for 循环在求所有选择的最小值
             //当金额为i时的最少硬币数量也就是金额为i-coins[0],i-coins[1],i-coins[2].. i-coins[n]其中最少硬币数量+1
             for (int coin : coins) {
