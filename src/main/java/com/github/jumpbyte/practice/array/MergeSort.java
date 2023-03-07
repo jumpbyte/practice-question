@@ -23,6 +23,8 @@ public class MergeSort {
         sort(nums,start,mid);
         //再对右半部分nums[mid+1,end]排序
         sort(nums,mid+1,end);
+        //合并左右排序好的两个数组
+        merge(nums,start,mid,end);
     }
 
     // 将 nums[start,mid] [mid+1,end] 这两个有序数组合并成一个有序数组
