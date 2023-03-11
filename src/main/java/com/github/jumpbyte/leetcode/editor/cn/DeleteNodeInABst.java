@@ -115,7 +115,13 @@ class Solution {
         return root;
     }
 
+    /**
+     * 获取root右子树中值最小的节点
+     * @param root
+     * @return
+     */
     public TreeNode getMin(TreeNode root){
+        // BST 最左边的就是最小的
         while (root.left != null){
             root = root.left;
         }
