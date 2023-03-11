@@ -20,7 +20,6 @@ public class QuickSort {
         sort(nums, start, p - 1);
         sort(nums, p + 1, end);
     }
-
     // 对nums[start...end]进行切分
     int partition(int[] nums, int start, int end) {
         // 取第一个位置的元素作为基准元素
@@ -30,7 +29,6 @@ public class QuickSort {
         // 之后都要正确维护这个边界区间的定义
         int left = start + 1;
         int right = end;
-
         // 当left > right时结束循环 以保证区间[start, end]都被覆盖
         while(left <= right) {
             //找到一个比pivot大的一个索引left停止
