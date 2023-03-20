@@ -2,7 +2,6 @@ package com.github.jumpbyte.practice.array;
 
 /**
  * 前缀后数组
- * @author yuanjinan
  */
 public class PreSumArray {
 
