@@ -54,13 +54,12 @@
  
   package com.github.jumpbyte.leetcode.editor.cn;
 
- import java.util.Arrays;
  import java.util.HashMap;
 
  public class TwoSum{
       public static void main(String[] args) {
            Solution solution = new TwoSum().new Solution();
-          solution.twoSum(new int[]{3,2,4},6);
+           solution.twoSum(new int[]{3,2,4},6);
       }
       //leetcode submit region begin(Prohibit modification and deletion)
       class Solution {
