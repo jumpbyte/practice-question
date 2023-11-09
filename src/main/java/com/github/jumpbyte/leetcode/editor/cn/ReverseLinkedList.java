@@ -98,7 +98,7 @@ public class ReverseLinkedList {
          * @param head
          * @return
          */
-        public ListNode reverseList(ListNode head) {
+        public ListNode reverseList2(ListNode head) {
             //1->2->3->3->4->5
             ListNode dummy = new ListNode(0);
             dummy.next = head;
@@ -111,6 +111,20 @@ public class ReverseLinkedList {
             }
             return dummy.next;
         }
+
+
+        public ListNode reverseList(ListNode head) {
+             ListNode newHead = null;
+             ListNode cur = head;
+             while (cur!=null){
+                 ListNode next = cur.next;
+                 cur.next = newHead;
+                 newHead = cur;
+                 cur = next;
+             }
+             return newHead;
+        }
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
