@@ -18,7 +18,7 @@ public class SortList {
      */
     class Solution {
         public ListNode sortList(ListNode head) {
-            
+            return null;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
