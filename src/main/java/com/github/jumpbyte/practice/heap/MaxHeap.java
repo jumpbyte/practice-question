@@ -47,6 +47,7 @@ public class MaxHeap {
         this.capacity = capacity;
         //最大堆 0 位置预留，从1开始存储元素
         this.elements = new int[capacity + 1];
+        //哨兵节点，减少边界检查
         this.elements[0] = Integer.MAX_VALUE;
     }
 

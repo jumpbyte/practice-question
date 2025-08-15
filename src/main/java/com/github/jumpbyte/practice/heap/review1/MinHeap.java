@@ -17,6 +17,16 @@ public class MinHeap {
         size = 0;
     }
 
+    /**
+     * 创建最小堆
+     * @param items 指定堆元素初始化最小堆
+     */
+    public MinHeap(int[] items) {
+        heap = items;
+        size = items.length;
+        buildMinHeap();
+    }
+
 
     /**
      * 往堆中插入元素
@@ -118,6 +128,39 @@ public class MinHeap {
         return size == 0;
     }
 
+
+
+    // 构建最小堆
+    private void buildMinHeap() {
+        // 从最后一个非叶子节点开始，向上调整
+        for (int i = (size / 2) - 1; i >= 0; i--) {
+            heapify(i);
+        }
+    }
+
+    // 调整以 index 为根的子树，使其满足最小堆的性质
+    private void heapify(int index) {
+        int smallest = index; // 初始化最小值为当前节点
+        int left = 2 * index + 1; // 左子节点索引
+        int right = 2 * index + 2; // 右子节点索引
+
+        // 如果左子节点存在且小于当前最小值，则更新最小值索引
+        if (left < size && heap[left] < heap[smallest]) {
+            smallest = left;
+        }
+
+        // 如果右子节点存在且小于当前最小值，则更新最小值索引
+        if (right < size && heap[right] < heap[smallest]) {
+            smallest = right;
+        }
+
+        // 如果最小值不是当前节点，交换并递归调整
+        if (smallest != index) {
+            swap(index, smallest);
+            heapify(smallest);
+        }
+    }
+
     public static void main(String[] args) {
         MinHeap minHeap = new MinHeap(10);
         minHeap.push(1);
@@ -128,6 +171,11 @@ public class MinHeap {
         minHeap.push(10);
         while (!minHeap.isEmpty()){
             System.out.println(minHeap.pop());
+        }
+
+        MinHeap minHeap1 = new MinHeap(new int[]{1,2,3,4,5,0,7,8,9,10});
+        while (!minHeap1.isEmpty()){
+            System.out.println(minHeap1.pop());
         }
     }
 

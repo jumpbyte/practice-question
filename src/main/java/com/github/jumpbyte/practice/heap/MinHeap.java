@@ -45,6 +45,7 @@ public class MinHeap {
         this.capacity = capacity;
         //最小堆 0 位置预留，从下标1开始存储元素
         this.elements = new int[capacity + 1];
+        //哨兵节点，减少边界检查
         this.elements[0] = Integer.MIN_VALUE;
     }
 
@@ -63,7 +64,8 @@ public class MinHeap {
         }
         //i指向插入堆的最后一个元素位置下标
         i = ++this.size;
-        for (; elements[i / 2] > item; i = i / 2) {
+        //因为有哨兵节点，此处i>1的边界判断可以省略...
+        for (; elements[i / 2] > item && i>1; i = i / 2) {
             //如果插入位置i的父节点比插入元素值item大，则i位置的父节点下去，移动到i位置
             this.elements[i] = elements[i / 2];
         }
@@ -115,6 +117,10 @@ public class MinHeap {
 
     public boolean isEmpty() {
         return this.size == 0;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(3/2);
     }
 
 
