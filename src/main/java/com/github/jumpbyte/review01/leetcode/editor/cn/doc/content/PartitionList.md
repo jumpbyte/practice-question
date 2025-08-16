@@ -270,13 +270,13 @@ var partition = function(head, x) {
 
 肯定有读者对「断开原链表中的每个节点的 `next` 指针」这部分代码有疑问，借助我们的可视化面板就很容易看明白了，首先看下正确的写法：
 
-<hr /><details open hint-container details><summary style="font-size: medium"><strong>🍭🍭 算法可视化 🍭🍭</strong></summary><div id="data_partition-list"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
+<hr /><details open hint-container details><summary style="font-size: medium"><strong>🌈🌈 算法可视化 🌈🌈</strong></summary><div id="data_partition-list"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
 <div id="iframe_partition-list"></div></div>
 </details><hr /><br />
 
 如果你不断开原链表中的每个节点的 `next` 指针就会出错，因为结果链表中会包含一个环：
 
-<hr /><details open hint-container details><summary style="font-size: medium"><strong>🌈🌈 算法可视化 🌈🌈</strong></summary><div id="data_mydata-partition-list"  category="tutorial" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
+<hr /><details open hint-container details><summary style="font-size: medium"><strong>👾👾 算法可视化 👾👾</strong></summary><div id="data_mydata-partition-list"  category="tutorial" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
 <div id="iframe_mydata-partition-list"></div></div>
 </details><hr /><br />
 
