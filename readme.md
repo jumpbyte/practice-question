@@ -10,3 +10,6 @@
 1. [力扣85:单链表的分解](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/PartitionList.java)
 2. [力扣21:合并两个有序链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/MergeTwoSortedLists.java)
 3. [力扣23:合并K个排序链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/MergeKSortedLists.java)
+4. [力扣19:链表的删除倒数第k个节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveNthNodeFromEndOfList.java)
+5. [力扣876:链表的中间节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/MiddleOfTheLinkedList.java)
+6. [力扣141:环形链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/LinkedListCycle.java)

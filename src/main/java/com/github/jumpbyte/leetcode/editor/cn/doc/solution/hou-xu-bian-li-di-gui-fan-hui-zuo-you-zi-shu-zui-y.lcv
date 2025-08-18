@@ -1,0 +1,96 @@
+### 解题思路
+
+任务调度存在依赖关系，任何一个node节点任务，都依赖于node.left和node.right前置节点任务的完成。所以，这是一个很明显的后序遍历思路。
+
+这里很多人应该都会想到递归左右子树，获取左右子树的最小执行时间的较大值+当前节点的时间，得到解。
+
+于是乎，卡在了测试用例3的7.5中。
+
+上面思想类似贪心选择，局部最优，统一起来，不一定是整体最优。
+
+**因为任务是可以暂时中断的，在这个情况下，我们可以把所有的前置任务看成一个整体来思考，摒弃细节，这样思路会清晰一些。**
+
+### 其他题解也说了大体的思路，就是如果left>right，就要把left多出来的串行时间往right的并行时间里摊，反之亦然。
+
+#### 这里我谈一下自己的理解，也许存在问题，也希望各位大佬可以指正。
+
+**首先，假设不存在多个cpu的情况(即只有一个cpu)，要执行完所有的前置任务**，那前置任务的总时间肯定是$preTime = sum(node.left) + sum(node.right)$。这时，我们将preTime看成一个整体。
+
+那么现在变成双核CPU了。一个整体的preTime开始双核并行了，那么**一个整体下的preTime**是多少呢？
+
+**很显然，是preTime/2**
+
+是不是豁然开朗了？在前置任务**最为理想**的情况下，**所有任务都能一直并行，不存在串行时间**。这个类似于动态规划的前置条件。至于前置任务再往前的任务，和任务它到底是怎么分配时间的，怎么去分摊时间，我们并不关心，总之，你能在preTime/2的时间内完成，就OK了。如果CPU核心更多，就是preTime/n。
+
+当然，**前置任务最优的解preTime/2，是一个理想情况**，具体的任务执行，是非常有可能达不到这种情况。比如题目的测试用例1。
+
+所以，每个节点的任务执行时间的最小值，应该是$Max(time(node.left),time(node.right),preTime/2) + node.val$。
+
+即左子树执行完成的最小时间、右子树执行完成的最小时间、左右子树全部节点并行执行的时间，三者的最大值，再加上当前节点的任务时间。
+
+### 细节方面的推导，大家可以移步 [@zqy1018](/u/zqy1018/) 的题解 [Python树形DP](https://leetcode-cn.com/problems/er-cha-shu-ren-wu-diao-du/solution/c-shu-xing-dp-by-zqy1018/)
+
+最后将最优时间往根节点递推。抵达根节点后的最优解，就是全局的最优解。
+
+### 核心代码
+
+* java
+
+```java
+// 获取左右子树的值
+double[] leftTime = execTime(node.left,n);
+double[] rightTime = execTime(node.right,n);
+// 左右子树节点之和
+double sum = leftTime[1] + rightTime[1];
+// 当前节点执行完的最小消耗时间
+double minTime = Math.max(Math.max(leftTime[0],rightTime[0]),sum/n) + node.val;
+```
+
+### 代码
+
+* java
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    /**
+     * LCP 10. 二叉树任务调度
+     * @param root
+     * @return
+     */
+    public double minimalExecTime(TreeNode root) {
+        double[] res = execTime(root,2);
+        return res[0];
+    }
+
+    /**
+     * 获取node最小执行时间
+     * @param node node
+     * @param n 并行数
+     * @return [0]执行完当前节点最小耗时，[1]当前node为根的时间串行之和
+     */
+    private double[] execTime(TreeNode node,int n){
+        if (node == null){
+            // [0]执行完当前节点最小耗时，[1]当前node为根的时间串行之和
+            return new double[]{0.0D,0.0D};
+        }
+        // 获取左右子树的值
+        double[] leftTime = execTime(node.left,n);
+        double[] rightTime = execTime(node.right,n);
+        // 左右子树节点之和
+        double sum = leftTime[1] + rightTime[1];
+        // 当前节点执行完的最小消耗时间
+        double minTime = Math.max(Math.max(leftTime[0],rightTime[0]),sum/n) + node.val;
+        return new double[]{minTime,sum + node.val};
+    }
+}
+```
+

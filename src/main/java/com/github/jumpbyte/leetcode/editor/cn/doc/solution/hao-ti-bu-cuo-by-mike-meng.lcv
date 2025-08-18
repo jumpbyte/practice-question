@@ -1,0 +1,90 @@
+1. 当时比赛的时候没有想明白，解题思路可以参考lee215的微信公众号[2020力扣杯](https://mp.weixin.qq.com/s/rmwVuDpbQlhoK7DcD715bg)。
+2. 后来仔细思考了一下，还是非常有意思的，当时比赛时想到了这点，但是如何进一步优化确实没有深入思考。
+3. 根据题目种的思路，实际上对于节点`root`,它的左右子树的任务是可以进行并行运行的，我们整个的解题思路也是围绕着，如何能够更好的解决左右子树同时并行的任务的最大值的问题。我们`dfs`时，每次返回`root`节点下双核并行任务的运行时间和单核任务运行的时间，分别为`s`,`d`,如何围绕左右子树的任务进行合并。
+4. 我们假设当前`root`节点的左子树返回的双核并行时间和单核运行时间分别为`d1`,`s1`.右子树返回的双核并行时间和单核运行时间分别为`d2`,`s2`.常规思路是我们讲所有的并行时间加起来，再把单核运行的时间中的部分最小值部分进行并行即`min(s1,s2)`.
+   所以我们可以得到左右子树的总共的并行时间为：
+   $$
+   d = d1 + d2 + min(s1,s2)
+   $$
+   左右子树的总共的单核运行时间为:
+   $$
+   s = abs(s1-s2)
+   $$
+   所以完成左右子树的任务的总时间应该为：
+   $$
+   t = d + s = d1 + d2 + min(s1,s2) + abs(s1-s2)\\
+   $$
+5. 上面这样的结果基本上大部分人都能想到，但是实际上这样真的是最小吗？我们能否再增加d的时间，减少s的时间？但是如何再增加并行的时间，可能讨论就非常的复杂。隐隐约约感觉可以进行优化，因为我们知道假设并行的时间d再增减$\Delta t1$,单核运行的时间就可以减少$2\Delta t1$,总的时间也就减少$\Delta t1$, 也即我们想办法如何减少`abs(s1-s2)`，减少单核运行的时间。
+   $$
+   t = d + \Delta t1 + s - 2\Delta t1 = d + s - \Delta t1\\
+   0 \le \Delta t1 \le \frac{s}{2} \\
+   $$
+   仔细思考一下，这点稍微有点绕弯。如何进行优化呢？比如`s1 > s2`,我们能否减少`d2`的并行时间$\Delta t$,然后`s2`就增加了$2 \Delta t$的时间内然后`s1`就能增加$2 \Delta t$与`s2`进行并行，这样我们就能够增加并行时间，那么总的消耗时间也就减少了。
+   $$
+   d2 = d2 - \Delta t\\
+   s2 = s2 + 2*\Delta t\\
+   t = d + s  \\
+   t = d1 + d2  - \Delta t + min(s1,s2 + 2*\Delta t) + abs(s1-s2-2*\Delta t)
+   $$
+   也就是我们要从`d2`中剥离部分时间尽量延长`s2`的使得`abs(s1-s2)`最小。只有这样才能得到最小值，实际也是贪心算法。所以当`s1 > s2`时我们就要想办法提高`s2`,当`s2 > s1`时我们就需要想办法提高`s1`.只有这样才能保证绝对值之差最小。
+   已知如下条件:
+   $$
+   s1 \ge s2 \\
+   s1 \ge s2 - 2*\Delta t\\
+   d2 \ge \Delta t\\
+   d = d1 + d2 + min(s1,s2) = d1 + d2 + s2\\
+   s = abs(s1-s2) = s1 - s2 \\
+   t = d1 + d2 + s1 \\
+   $$
+   我们对上述表达式进行展开：
+   $$
+   d^{'} = d1 + d2 + s2 + \Delta t \\
+   s^{'} = s1 - s2 - 2*\Delta t \\
+   t^{'} = d1 + d2  - \Delta t + s2 + 2*\Delta t  + (s1-s2-2*\Delta t)  \\
+   t^{'} = d1 + d2 - \Delta t + s1
+   $$
+   当然最优解的话肯定为：
+   $$
+   \Delta t = \frac{s1-s2}{2}
+   $$
+   但由于还有下面的限制。
+   $$
+   \Delta t \le d2  \\
+   $$
+   所以总结起来：
+   $$
+   \Delta T = min(\frac{s1-s2}{2},d2)
+   $$
+
+* c++
+
+```c++
+class Solution {
+public:
+    pair<double,double> dfs(TreeNode * root){
+        if(root == NULL) return {0,0};
+        pair<double,double> l = dfs(root->left);
+        pair<double,double> r = dfs(root->right);
+        double s = 0.0;
+        double d = 0.0;
+        double delta = 0.0;
+
+       if(l.first >= r.first){
+            delta = min((l.first-r.first)/2,r.second);
+            d = l.second + r.second + r.first + delta;
+            s = l.first - r.first - 2*delta;
+            return {s + root->val,d};
+        }else{
+            delta = min((r.first-l.first)/2,l.second);
+            d = l.second + r.second + l.first + delta;
+            s = r.first - l.first - 2*delta;
+            return {s + root->val,d};
+        }
+    }
+    double minimalExecTime(TreeNode* root) {
+        pair<double,double> t = dfs(root);
+        return t.first + t.second;
+    }
+};
+```
+

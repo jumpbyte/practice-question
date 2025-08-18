@@ -1,0 +1,67 @@
+> Problem: [LCP 10. 二叉树任务调度](https://leetcode.cn/problems/er-cha-shu-ren-wu-diao-du/description/)
+
+[TOC]
+
+# 思路
+
+> 对官方解的通俗解读，有不妥之处，还请多多斧正
+
+# 解题方法
+
+> 一图胜千言
+> ![image.png](https://pic.leetcode.cn/1669000596-MQfjIu-image.png)
+
+# 复杂度
+
+- 时间复杂度:
+
+> O(n)。每个节点只被访问一次。
+
+- 空间复杂度:
+
+> O(n)
+
+# Code
+
+* []
+
+```JavaScript
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var minimalExecTime = function(root) {
+ let dfs = (node) => {
+   if (!node) return [0, 0];
+   // 对于任何一颗任务树，它一定有一个先并行后串行的最优策略。树的根结点只能串行
+   let nodeTime = node.val;
+   let [a, b]= dfs(node.left);
+   let [c, d]= dfs(node.right);
+   /*
+    设一颗任务树的左子树所有任务时间和为 a ，最大并行时间为 b ，右子树分别为 c,d。那么这颗任务树最大并行时间为 (a+c ) / 2 ，但不一定能取到。
+    不失一般性，假设 a≥c  。如果 a−2b≤c ，那么最优策略是左树先并行 a−c 的任务，剩余 c 的任务量，然后再两树并行，就达成了一直并行。并行时间取到了 (a+c) / 2 */ 
+   nodeTime = nodeTime + a + c;
+   if (a < c) { // 这里就是为了那个不失一般性假设 a≥c 才要进行交换变量
+     let tmp = [a, b];
+     [a, b] = [c, d];
+     [c, d] = [...tmp]
+   }
+   if ((a - 2 * b) <= c) {
+    return [nodeTime, (a + c) / 2]
+   } else {
+    return [nodeTime, c + b]
+   }
+ }
+ let res = dfs(root);
+ return res[0] - res[1]; // 一颗任务树的所有任务时间之和为 x ，最大并行时间为 y ，那么这个任务最少需要 x−y 的时间完成
+};
+```
+

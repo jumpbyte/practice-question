@@ -1,0 +1,98 @@
+#### 以下内容仅作为[这篇](https://leetcode.cn/problems/er-cha-shu-ren-wu-diao-du/solution/c-shu-xing-dp-by-zqy1018/)题解的补充, 所有符号的定义都与原题解的保持一致.
+
+对于任意一颗子树, 最优策略都可以是先并行一段时间, 再串行一段时间.
+
+我们在计算$f[i], sum[i]$时, 其子树的儿子的信息都是已知的, 即$f[l], sum[l]; f[r], sum[r]$都已求出来了。
+
+然后我们想办法通过子树的儿子的信息, 更新子树根节点的信息. 最后的答案即为$f[root]$
+
+---
+
+$f(i)为使用2台cpu执行完以i节点为根的子树的最短时间$
+$sum[i]为以i节点为根的子树所有任务的和$
+以下式子的推导都在求以i节点为根的子树$f[i], sum[i]$的值, 对于其儿子节点即$f[l], sum[l]; f[r], sum[r]$都已知.
+
+对于$i$节点的左子树, 设2台cpu可以并行运行的时间为x, 根据任意一颗子树, 最优策略都可以是先并行一段时间, 再串行一段时间, 即$并行时间+串行时间$
+
+- 并行时间为$x$, 串行时间为(总时间 - 并行时间)为$sum[l] - 2 * x$, ps: 只有并行和串行时间两种嘛
+- 所以$i$节点的左子树的执行时间为$并行时间 + 串行时间 = x + (sum[l] - 2 * x)$, 这个值肯定$>=$左子树的最小执行时间$f[l]$, ps:哪儿有比最小值还小的道理嘛
+- 即$x + (sum[l] - 2 * x) >= f[l]$
+
+同理对于$i$节点的右子树, 也有相似的推导
+
+- 即$y + (sum[r] - 2 * y) >= f[r]$
+
+---
+
+所以$x, y$的取值范围如下
+
+$$ 0 <= x <= sum[l] - f[l]$$
+
+$$ 0 <= y <= sum[r] - f[r] $$
+
+$$ f[l] - sum[l] <= y - x <= sum[r] - f[r] $$
+
+令$t = y - x$, 则$t$的取值范围如下:
+
+$$ f[l] - sum[l] <= t <= sum[r] - f[r] $$
+-----------------------------------------
+
+当前节点时间$val[i]$ + 左子树并行$x$时间 + 右子树并行$y$时间 + (左右子树一边一个cpu执行当然取max), 即
+
+$$ f(i) = val(i) + x + y + \max\{sum(l)−2x,sum(r)−2y\} $$
+
+$$ f(i) = val(i) + \max\{sum(l)−2x + x + y,sum(r)−2y + x + y\} $$
+
+$$ f(i) = val(i) + \max\{sum(l)+y−x,sum(r)−(y-x)\} $$
+
+令$t = y - x$, 则上式变为:
+
+$f(i) = val(i) + \min_{t\in[f(l)-sum(l), sum(r) - f(r)]} \max \{sum(l)+t, sum(r)-t\}$
+
+设$y(t)$为关于$t$的一次函数, $t\in[f(l)-sum(l), sum(r) - f(r)]$, 所以很容易求极值.
+
+$$ y(t) = sum[l] + t $$
+
+$$ y(t) = sum[r] - t $$
+
+当$sum[l] + t == sum[r] - t$时, $t = \frac{sum[r] - sum[l]}{2}$
+
+即楼主说的, 通过对 $mid = \frac{sum[r] - sum[l]}{2}$ 与$t\in[f(l)-sum(l), sum(r) - f(r)]$区间位置的讨论，我们就能算出这个 $max$ 的最小值。
+
+---
+
+参考代码
+
+$left.first = f[l], left.second = sum[l]$
+$right.first = f[r], right.second = sum[r]$
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    // <f[i], sum[i]>
+    std::pair<double, double>  dfs(TreeNode* root) {
+        if (root == NULL) return {0, 0};
+        auto left = dfs(root -> left);
+        auto right = dfs(root -> right);
+        double mid = (right.second - left.second) / 2;
+        double t1 = left.first - left.second;
+        double t2 = right.second - right.first;
+        assert(t1 <= t2);
+        double a = 0, b = left.second + right.second + root -> val;
+        if (t1 <= mid && mid <= t2) a = root -> val + left.second + mid;
+        else {
+            a = 1e9;
+            a = std::min(a, std::max(left.second + t1, right.second - t1));
+            a = std::min(a, std::max(left.second + t2, right.second - t2));
+            a += root -> val;
+        }
+        return {a, b};
+    }
+    double minimalExecTime(TreeNode* root) {
+        return dfs(root).first;
+    }
+};
+```
+
