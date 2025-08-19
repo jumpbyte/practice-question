@@ -19,16 +19,31 @@ public class RemoveDuplicatesFromSortedListIi {
      */
     class Solution {
         public ListNode deleteDuplicates(ListNode head) {
+            if(head == null || head.next == null){
+                return head;
+            }
+            //pre 指向当前处理的节点（当前段的起始节点）。
+            //next 是 pre 的下一个节点，用于判断是否重复。
+            //cur 用于连接最终保留的节点。
              ListNode dummy = new ListNode(-1);
              dummy.next = head;
+             ListNode pre = dummy.next;
+             ListNode next = pre.next;
              ListNode cur = dummy;
-             while (cur.next != null && cur.next.next != null){
-                 if(cur.next.val == cur.next.next.val){
-                     int x = cur.next.val;
-                     while (cur.next != null && cur.next.val == x){
-                         cur.next = cur.next.next;
+             while (next != null){
+                 // 有重复节点
+                 if(pre.val == next.val){
+                     while (next != null && pre.val == next.val){
+                         next = next.next;
                      }
-                 }else {
+                     //跳过所有重复节点，将 cur.next 指向第一个不重复的节点
+                     cur.next = next;
+                     pre = next;
+                     next = pre != null? pre.next : null;
+                 }else{
+                     // 没有重复，三个指针后移
+                     pre = next;
+                     next = pre.next;
                      cur = cur.next;
                  }
              }
@@ -41,6 +56,11 @@ public class RemoveDuplicatesFromSortedListIi {
     public static void main(String[] args) {
         Solution solution = new RemoveDuplicatesFromSortedListIi().new Solution();
         // put your test code here
+        ListNode head = ListNode.createHead(new int[]{1,1,1,2,3});
+        ListNode.print(solution.deleteDuplicates(head));
+        head = ListNode.createHead(new int[]{1,2,3,3,4,4,5});
+        System.out.println();
+        ListNode.print(solution.deleteDuplicates(head));
         
     }
 }
