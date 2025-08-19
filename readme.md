@@ -13,3 +13,5 @@
 4. [力扣19:链表的删除倒数第k个节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveNthNodeFromEndOfList.java)
 5. [力扣876:链表的中间节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/MiddleOfTheLinkedList.java)
 6. [力扣141:环形链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/LinkedListCycle.java)
+7. [力扣142:环形链表II](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/LinkedListCycleIi.java)
+8. [力扣82：链表的删除重复节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedListIi.java)
