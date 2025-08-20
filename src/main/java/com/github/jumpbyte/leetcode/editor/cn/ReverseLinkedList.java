@@ -86,6 +86,7 @@ public class ReverseLinkedList {
             if (head == null || head.next == null) {
                 return head;
             }
+            // 1->2->3->3->4->5
             ListNode newHead = reverseList(head.next);
             head.next.next = head;
             head.next = null;

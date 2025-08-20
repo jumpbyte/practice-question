@@ -56,7 +56,7 @@
 
 ## 基本思路
 
-这道题是 [2. 两数相加](/problems/add-two-numbers) 的进阶问题，我们模拟加法运算当然是从最低位开始加，这样才能正确的处理进位。但现在单链表的开头是最高位，那么最直接的想法就是先 [翻转链表](https://labuladong.online/algo/data-structure/reverse-linked-list-recursion/)，这样就可以继续玩第 2 题那一套了，没什么难度。
+这道题是 [✔ ✨2. 两数相加](/problems/add-two-numbers/) 的进阶问题，我们模拟加法运算当然是从最低位开始加，这样才能正确的处理进位。但现在单链表的开头是最高位，那么最直接的想法就是先 [翻转链表](https://labuladong.online/algo/data-structure/reverse-linked-list-recursion/)，这样就可以继续玩第 2 题那一套了，没什么难度。
 
 不过本题也说了，如果不让你反转链表怎么办？其实也好办，我们可以利用栈这种先进后出的数据结构，把链表节点从头到尾放进栈中，再从栈拿出来就是从尾到头的顺序，相当于是反转链表的效果，然后又回到了第 2 题的加法逻辑。
 
@@ -352,11 +352,23 @@ var addTwoNumbers = function(l1, l2) {
 </div></div>
 </div></div>
 
-<hr /><details open hint-container details><summary style="font-size: medium"><strong>🎃🎃 算法可视化 🎃🎃</strong></summary><div id="data_add-two-numbers-ii"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
+<hr /><details open hint-container details><summary style="font-size: medium"><strong>👾👾 算法可视化 👾👾</strong></summary><div id="data_add-two-numbers-ii"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
 <div id="iframe_add-two-numbers-ii"></div></div>
 </details><hr /><br />
 
 </div>
 </details>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 

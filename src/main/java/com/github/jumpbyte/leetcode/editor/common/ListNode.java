@@ -31,5 +31,6 @@ public class ListNode {
             String arrow = cur.next != null ? "->" : "";
             System.out.print(cur.val + arrow);
         }
+        System.out.println();
     }
 }

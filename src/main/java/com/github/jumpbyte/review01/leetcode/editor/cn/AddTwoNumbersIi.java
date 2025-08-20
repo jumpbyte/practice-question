@@ -18,6 +18,9 @@ public class AddTwoNumbersIi {
      */
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            if(l1 == null || l2 == null){
+                return null;
+            }
             Stack<Integer> stack1 = new Stack<>();
             Stack<Integer> stack2 = new Stack<>();
             while (l1 != null) {
@@ -30,22 +33,14 @@ public class AddTwoNumbersIi {
             }
             int carry = 0;
             ListNode dummy = new ListNode(-1);
-            ListNode pre = dummy;
-            while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            while (!stack1.isEmpty() || !stack2.isEmpty() || carry>0) {
                 int x = stack1.isEmpty() ? 0 : stack1.pop();
                 int y = stack2.isEmpty() ? 0 : stack2.pop();
                 int sum = x + y + carry;
                 carry = sum / 10;
-                ListNode node  = new ListNode(sum % 10);
-                if(pre == dummy){
-                    pre.next = node;
-                }else {
-                    ListNode next = pre.next;
-
-                }
-            }
-            if (carry > 0) {
-
+                ListNode newNode  = new ListNode(sum % 10);
+                newNode.next = dummy.next;
+                dummy.next = newNode;
             }
             return dummy.next;
             
@@ -59,6 +54,8 @@ public class AddTwoNumbersIi {
     public static void main(String[] args) {
         Solution solution = new AddTwoNumbersIi().new Solution();
         // put your test code here
-        
+        ListNode.print(solution.addTwoNumbers(ListNode.createHead(new int[]{2,4,3}), ListNode.createHead(new int[]{5,6,4})));
+        ListNode.print(solution.addTwoNumbers(ListNode.createHead(new int[]{7,2,4,3}), ListNode.createHead(new int[]{5,6,4})));
+        ListNode.print(solution.addTwoNumbers(ListNode.createHead(new int[]{0}), ListNode.createHead(new int[]{0})));
     }
 }
