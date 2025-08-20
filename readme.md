@@ -16,4 +16,4 @@
 7. [力扣142:环形链表II](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/LinkedListCycleIi.java)
 8. [力扣82：链表的删除重复节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedListIi.java)
 9. [力扣378:有序矩阵中的K个最小元素](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/KthSmallestElementInASortedMatrix.java)
-10.[力扣373 : 查找和最小的K对数字](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/FindKPairsWithSmallestSums.java)
+10. [力扣373 : 查找和最小的K对数字](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/FindKPairsWithSmallestSums.java)
