@@ -17,3 +17,11 @@
 9. [力扣378:有序矩阵中的K个最小元素](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/KthSmallestElementInASortedMatrix.java)
 10. [力扣373 : 查找和最小的K对数字](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/FindKPairsWithSmallestSums.java)
 11. [力扣445:两数相加II](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/AddTwoNumbersIi.java)
+12. [力扣234:回文链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/PalindromeLinkedList.java)]
+
+### 花式反转链表
+
+1. [力扣206:反转链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedList.java)
+
+### 数组
+

@@ -20,7 +20,7 @@ public class PalindromeLinkedList {
     class Solution {
 
         /**
-         * 解法二：快慢指针定位中间节点，然后右半部分链表，比较左右链表节点值是否相等
+         * 解法三：快慢指针定位中间节点，然后右半部分链表，比较左右链表节点值是否相等
          * @param head
          * @return
          */
@@ -58,6 +58,32 @@ public class PalindromeLinkedList {
                 cur = next;
             }
             return pre;
+        }
+
+        boolean res = false;
+        ListNode left;
+
+        /**
+         * 解法二： 递归栈，利用链表后序位置倒序遍历链表
+         * 实际上就是把链表节点放入一个栈，然后再拿出来，这时候元素顺序就是反的，只不过我们利用的是递归函数的堆栈而已。
+         * @param head
+         * @return
+         */
+        public boolean isPalindrome2(ListNode head){
+            left = head;
+            return res;
+        }
+
+        private void reverse(ListNode right){
+            if(right == null){
+                return;
+            }
+            reverse(right.next);
+            //后序位置倒序遍历链表
+            if(left.val != right.val){
+                res = false;
+            }
+            left = left.next;
         }
 
         /**
