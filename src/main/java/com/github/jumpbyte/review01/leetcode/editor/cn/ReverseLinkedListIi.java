@@ -17,32 +17,39 @@ public class ReverseLinkedListIi {
      * }
      */
     class Solution {
-        public ListNode reverseBetween(ListNode head, int left, int right) {
-            if(head == null || left > right){
+        public ListNode reverseBetween(ListNode head, int m, int n) {
+            if(head == null || m > n){
                 return null;
             }
-            int i = 0;
-            ListNode cur = head;
-            while (i < left){
-                cur = cur.next;
-                i++;
+            if (m == 1) {
+                return reverseN(head, n);
             }
-            cur.next = reverseN(cur.next, right - left);
+            // 找到第 m 个节点的前驱
+            ListNode pre = head;
+            for (int i = 1; i < m - 1; i++) {
+                pre = pre.next;
+            }
+            // 从第 m 个节点开始反转
+            pre.next = reverseN(pre.next, n - m + 1);
             return head;
+
         }
 
+        private ListNode successor = null;
         public ListNode reverseN(ListNode head, int n){
-            ListNode pre = null;
-            ListNode cur = head;
-            ListNode nxt = head.next;
-            while (n > 0){
-                cur.next = pre;
-                pre = cur;
-                cur = nxt;
-                nxt = nxt.next;
-                n--;
+            if (n == 1) {
+                // 记录第 n + 1 个节点
+                successor = head.next;
+                return head;
             }
-            return pre;
+            // 以 head.next 为起点，需要反转前 n - 1 个节点
+            ListNode last = reverseN(head.next, n - 1);
+
+            head.next.next = head;
+            // 让反转之后的 head 节点和后面的节点连起来
+            head.next = successor;
+            return last;
+
         }
 
     }

@@ -18,10 +18,14 @@
 10. [力扣373 : 查找和最小的K对数字](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/FindKPairsWithSmallestSums.java)
 11. [力扣445:两数相加II](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/AddTwoNumbersIi.java)
 12. [力扣234:回文链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/PalindromeLinkedList.java)]
+13. [力扣83:删除排序链表中的重复元素](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedList.java)]
 
 ### 花式反转链表
 
-1. [力扣206:反转链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedList.java)
+1. [力扣206:反转链表第m到n之间的节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedList.java)
 
 ### 数组
+
+1. [力扣26：删除排序数组中的重复项](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedArray.java)]
+2. 
 
