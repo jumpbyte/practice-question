@@ -2,9 +2,9 @@
 
 源码阅读 ：https://github.com/zchen96/jdk1.8-source-code-read
 
-## 常考算法题目列举
+# 常考算法题目列举
 
-### 链表
+## 链表
 
 1. [力扣85:单链表的分解](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/PartitionList.java)
 2. [力扣21:合并两个有序链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/MergeTwoSortedLists.java)
@@ -20,12 +20,26 @@
 12. [力扣234:回文链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/PalindromeLinkedList.java)]
 13. [力扣83:删除排序链表中的重复元素](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedList.java)]
 
-### 花式反转链表
+**花式反转链表**
+1. [力扣92:反转链表](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedList.java)
+2. [翻转前k个节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedListI.java)]
+2. [力扣206:反转链表第m到n之间的节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedListIi.java)
 
-1. [力扣206:反转链表第m到n之间的节点](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/ReverseLinkedList.java)
+## 数组
 
-### 数组
 
-1. [力扣26：删除排序数组中的重复项](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedArray.java)]
-2. 
+### **双指针**
+
+1. [力扣26：删除排序数组中的重复项](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/RemoveDuplicatesFromSortedArray.java)
+
+### 前缀和
+
+
+### 差分数组
+
+
+### 双指针技巧
+
+
+
 
