@@ -12,6 +12,7 @@ public class MinimumWindowSubstring {
             Map<Character,Integer>  needs = new HashMap<>();
             // 记录窗口中的字符及其出现的次数
             Map<Character,Integer>  window = new HashMap<>();
+            // 窗口中已经满足的目标字符个数
             int validCount=0;
             int left =0 ,right = 0;
             // 记录最小覆盖子串的起始索引及长度
