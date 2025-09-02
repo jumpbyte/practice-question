@@ -1,36 +1,40 @@
-<p>给你两个字符串&nbsp;<code>s1</code>&nbsp;和&nbsp;<code>s2</code> ，写一个函数来判断 <code>s2</code> 是否包含 <code>s1</code><strong>&nbsp;</strong>的 <span data-keyword="permutation-string">排列</span>。如果是，返回 <code>true</code> ；否则，返回 <code>false</code> 。</p>
-
-<p>换句话说，<code>s1</code> 的排列之一是 <code>s2</code> 的 <strong>子串</strong> 。</p>
+<p>给定两个字符串&nbsp;<code>s</code>&nbsp;和 <code>p</code>，找到&nbsp;<code>s</code><strong>&nbsp;</strong>中所有&nbsp;<code>p</code><strong>&nbsp;</strong>的&nbsp;<strong><span data-keyword="anagram">异位词</span>&nbsp;</strong>的子串，返回这些子串的起始索引。不考虑答案输出的顺序。</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例 1：</strong></p>
+<p><strong>示例&nbsp;1:</strong></p>
 
 <pre>
-<strong>输入：</strong>s1 = "ab" s2 = "eidbaooo"
-<strong>输出：</strong>true
-<strong>解释：</strong>s2 包含 s1 的排列之一 ("ba").
+<strong>输入: </strong>s = "cbaebabacd", p = "abc"
+<strong>输出: </strong>[0,6]
+<strong>解释:</strong>
+起始索引等于 0 的子串是 "cba", 它是 "abc" 的异位词。
+起始索引等于 6 的子串是 "bac", 它是 "abc" 的异位词。
 </pre>
 
-<p><strong>示例 2：</strong></p>
+<p><strong>&nbsp;示例 2:</strong></p>
 
 <pre>
-<strong>输入：</strong>s1= "ab" s2 = "eidboaoo"
-<strong>输出：</strong>false
+<strong>输入: </strong>s = "abab", p = "ab"
+<strong>输出: </strong>[0,1,2]
+<strong>解释:</strong>
+起始索引等于 0 的子串是 "ab", 它是 "ab" 的异位词。
+起始索引等于 1 的子串是 "ba", 它是 "ab" 的异位词。
+起始索引等于 2 的子串是 "ab", 它是 "ab" 的异位词。
 </pre>
 
 <p>&nbsp;</p>
 
-<p><strong>提示：</strong></p>
+<p><strong>提示:</strong></p>
 
 <ul> 
- <li><code>1 &lt;= s1.length, s2.length &lt;= 10<sup>4</sup></code></li> 
- <li><code>s1</code> 和 <code>s2</code> 仅包含小写字母</li> 
+ <li><code>1 &lt;= s.length, p.length &lt;= 3 * 10<sup>4</sup></code></li> 
+ <li><code>s</code>&nbsp;和&nbsp;<code>p</code>&nbsp;仅包含小写字母</li> 
 </ul>
 
-<details><summary><strong>Related Topics</strong></summary>哈希表 | 双指针 | 字符串 | 滑动窗口</details><br>
+<details><summary><strong>Related Topics</strong></summary>哈希表 | 字符串 | 滑动窗口</details><br>
 
-<div>👍 1066, 👎 0<span style='float: right;'><span style='color: gray;'><a href='https://github.com/labuladong/fucking-algorithm/issues' target='_blank' style='color: lightgray;text-decoration: underline;'>bug 反馈</a> | <a href='https://labuladong.online/algo/fname.html?fname=jb插件简介' target='_blank' style='color: lightgray;text-decoration: underline;'>使用指南</a> | <a href='https://labuladong.online/algo/' target='_blank' style='color: lightgray;text-decoration: underline;'>更多配套插件</a></span></span></div>
+<div>👍 1740, 👎 0<span style='float: right;'><span style='color: gray;'><a href='https://github.com/labuladong/fucking-algorithm/issues' target='_blank' style='color: lightgray;text-decoration: underline;'>bug 反馈</a> | <a href='https://labuladong.online/algo/fname.html?fname=jb插件简介' target='_blank' style='color: lightgray;text-decoration: underline;'>使用指南</a> | <a href='https://labuladong.online/algo/' target='_blank' style='color: lightgray;text-decoration: underline;'>更多配套插件</a></span></span></div>
 
 <div id="labuladong"><hr>
 
@@ -46,13 +50,9 @@
 
 ## 基本思路
 
-和子数组/子字符串相关的题目，很可能就是要考察滑动窗口算法，往这方面思考就行了。
+这题和 [✔ ✨567. 字符串的排列](/problems/permutation-in-string/) 一样，只不过找到一个合法异位词（排列）之后将它的起始索引加入结果列表即可。
 
-这道题，相当于你一个 `S` 和一个 `T`，请问你 `S` 中是否存在一个子串，包含 `T` 中所有字符且不包含其他字符？
-
-如果这样想的话就和 [✔ ✨76. 最小覆盖子串](/problems/minimum-window-substring/) 有些类似了。
-
-一般来说滑动窗口算法难度略高，需要你掌握算法原理以及算法模板辅助，见详细题解吧。
+滑动窗口算法难度略高，具体的算法原理以及算法模板见详细题解。
 
 **详细题解**：
   - [滑动窗口算法核心代码模板](https://labuladong.online/algo/essential-technique/sliding-window-framework/)
@@ -86,42 +86,53 @@
 // 注意：cpp 代码由 chatGPT🤖 根据我的 java 代码翻译。
 // 本代码的正确性已通过力扣验证，如有疑问，可以对照 java 代码查看。
 
+#include <vector>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
 class Solution {
 public:
-    // 判断 s 中是否存在 t 的排列
-    bool checkInclusion(string t, string s) {
-        unordered_map<char, int> need, window;
-        for (char c : t) need[c]++;
+    vector<int> findAnagrams(string s, string t) {
+        unordered_map<char, int> need;
+        unordered_map<char, int> window;
+        for (char c : t) {
+            need[c]++;
+        }
 
         int left = 0, right = 0;
         int valid = 0;
+        // 记录结果
+        vector<int> res;
         while (right < s.size()) {
             char c = s[right];
             right++;
             // 进行窗口内数据的一系列更新
             if (need.count(c)) {
                 window[c]++;
-                if (window[c] == need[c])
+                if (window[c] == need[c]) {
                     valid++;
+                }
             }
-
             // 判断左侧窗口是否要收缩
             while (right - left >= t.size()) {
-                // 在这里判断是否找到了合法的子串
-                if (valid == need.size())
-                    return true;
+                // 当窗口符合条件时，把起始索引加入 res
+                if (valid == need.size()) {
+                    res.push_back(left);
+                }
                 char d = s[left];
                 left++;
                 // 进行窗口内数据的一系列更新
                 if (need.count(d)) {
-                    if (window[d] == need[d])
+                    if (window[d] == need[d]) {
                         valid--;
+                    }
                     window[d]--;
                 }
             }
         }
-        // 未找到符合条件的子串
-        return false;
+        return res;
     }
 };
 ```
@@ -134,41 +145,51 @@ public:
 # 注意：python 代码由 chatGPT🤖 根据我的 java 代码翻译。
 # 本代码的正确性已通过力扣验证，如有疑问，可以对照 java 代码查看。
 
+from collections import deque, Counter
+from typing import List
+
 class Solution:
-    # 判断 s 中是否存在 t 的排列
-    def checkInclusion(self, t: str, s: str) -> bool:
-        need = {}
-        window = {}
-        for c in t:
-            need[c] = need.get(c, 0) + 1
+    # 查找字符串中所有字母异位词
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        res = []
+        p_count = Counter(p)
+        s_count = Counter()
+        
+        # 滑动窗口模板
+        for i in range(len(s)):
+            # 扩大窗口，更新窗口最值
+            s_count[s[i]] += 1
+            if i >= len(p):
+                # 缩小窗口，更新窗口最值
+                if s_count[s[i - len(p)]] == 1:
+                    del s_count[s[i - len(p)]]
+                else:
+                    s_count[s[i - len(p)]] -= 1
+            # 在窗口收缩判断完之后才更新答案
+            if s_count == p_count:
+                res.append(i - len(p) + 1)
+        return res
 
-        left = 0
-        right = 0
-        valid = 0
-        while right < len(s):
-            c = s[right]
-            right += 1
-            # 进行窗口内数据的一系列更新
-            if c in need:
-                window[c] = window.get(c, 0) + 1
-                if window[c] == need[c]:
-                    valid += 1
-
-            # 判断左侧窗口是否要收缩
-            while right - left >= len(t):
-                # 在这里判断是否找到了合法的子串
-                if valid == len(need):
-                    return True
-                d = s[left]
-                left += 1
-                # 进行窗口内数据的一系列更新
-                if d in need:
-                    if window[d] == need[d]:
-                        valid -= 1
-                    window[d] -= 1
-
-        # 未找到符合条件的子串
-        return False
+class MonotonicQueue:
+    # 单调队列的通用实现，可以高效维护最大值和最小值
+    # 由于我这里考虑了泛型和通用性，所以提交的性能会略差，你可自行精简
+    def __init__(self):
+        self.deque = deque()
+    
+    def push(self, value: int):
+        while self.deque and self.deque[-1] < value:
+            self.deque.pop()
+        self.deque.append(value)
+    
+    def pop(self, value: int):
+        if self.deque and self.deque[0] == value:
+            self.deque.popleft()
+    
+    def max(self) -> int:
+        return self.deque[0]
+    
+    def min(self) -> int:
+        return self.deque[-1]
 ```
 
 </div></div>
@@ -177,41 +198,45 @@ class Solution:
 
 ```java
 class Solution {
-    // 判断 s 中是否存在 t 的排列
-    public boolean checkInclusion(String t, String s) {
+    public List<Integer> findAnagrams(String s, String t) {
         Map<Character, Integer> need = new HashMap<>();
         Map<Character, Integer> window = new HashMap<>();
-        for (char c : t.toCharArray()) need.put(c, need.getOrDefault(c, 0) + 1);
+        for (char c : t.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
 
         int left = 0, right = 0;
         int valid = 0;
+        // 记录结果
+        List<Integer> res = new ArrayList<>();
         while (right < s.length()) {
             char c = s.charAt(right);
             right++;
             // 进行窗口内数据的一系列更新
             if (need.containsKey(c)) {
                 window.put(c, window.getOrDefault(c, 0) + 1);
-                if (window.get(c).equals(need.get(c)))
+                if (window.get(c).equals(need.get(c))) {
                     valid++;
+                }
             }
-
             // 判断左侧窗口是否要收缩
             while (right - left >= t.length()) {
-                // 在这里判断是否找到了合法的子串
-                if (valid == need.size())
-                    return true;
+                // 当窗口符合条件时，把起始索引加入 res
+                if (valid == need.size()) {
+                    res.add(left);
+                }
                 char d = s.charAt(left);
                 left++;
                 // 进行窗口内数据的一系列更新
                 if (need.containsKey(d)) {
-                    if (window.get(d).equals(need.get(d)))
+                    if (window.get(d).equals(need.get(d))) {
                         valid--;
+                    }
                     window.put(d, window.get(d) - 1);
                 }
             }
         }
-        // 未找到符合条件的子串
-        return false;
+        return res;
     }
 }
 ```
@@ -224,46 +249,44 @@ class Solution {
 // 注意：go 代码由 chatGPT🤖 根据我的 java 代码翻译。
 // 本代码的正确性已通过力扣验证，如有疑问，可以对照 java 代码查看。
 
-func checkInclusion(t string, s string) bool {
-    // 判断 s 中是否存在 t 的排列
+func findAnagrams(s string, t string) []int {
     need := make(map[rune]int)
     window := make(map[rune]int)
     for _, c := range t {
-        need[c]++
+        need[c] = need[c] + 1
     }
 
-    left, right := 0, 0
-    valid := 0
+    left, right, valid := 0, 0, 0
+    // 记录结果
+    res := []int{}
     for right < len(s) {
         c := rune(s[right])
         right++
         // 进行窗口内数据的一系列更新
-        if need[c] > 0 {
-            window[c]++
+        if _, ok := need[c]; ok {
+            window[c] = window[c] + 1
             if window[c] == need[c] {
                 valid++
             }
         }
-
         // 判断左侧窗口是否要收缩
         for right-left >= len(t) {
-            // 在这里判断是否找到了合法的子串
+            // 当窗口符合条件时，把起始索引加入 res
             if valid == len(need) {
-                return true
+                res = append(res, left)
             }
             d := rune(s[left])
             left++
             // 进行窗口内数据的一系列更新
-            if need[d] > 0 {
+            if _, ok := need[d]; ok {
                 if window[d] == need[d] {
                     valid--
                 }
-                window[d]--
+                window[d] = window[d] - 1
             }
         }
     }
-    // 未找到符合条件的子串
-    return false
+    return res
 }
 ```
 
@@ -275,8 +298,7 @@ func checkInclusion(t string, s string) bool {
 // 注意：javascript 代码由 chatGPT🤖 根据我的 java 代码翻译。
 // 本代码的正确性已通过力扣验证，如有疑问，可以对照 java 代码查看。
 
-var checkInclusion = function(t, s) {
-    // 判断 s 中是否存在 t 的排列
+var findAnagrams = function(s, t) {
     let need = new Map();
     let window = new Map();
     for (let c of t) {
@@ -285,8 +307,10 @@ var checkInclusion = function(t, s) {
 
     let left = 0, right = 0;
     let valid = 0;
+    // 记录结果
+    let res = [];
     while (right < s.length) {
-        let c = s.charAt(right);
+        let c = s[right];
         right++;
         // 进行窗口内数据的一系列更新
         if (need.has(c)) {
@@ -295,14 +319,13 @@ var checkInclusion = function(t, s) {
                 valid++;
             }
         }
-
         // 判断左侧窗口是否要收缩
         while (right - left >= t.length) {
-            // 在这里判断是否找到了合法的子串
+            // 当窗口符合条件时，把起始索引加入 res
             if (valid === need.size) {
-                return true;
+                res.push(left);
             }
-            let d = s.charAt(left);
+            let d = s[left];
             left++;
             // 进行窗口内数据的一系列更新
             if (need.has(d)) {
@@ -313,21 +336,18 @@ var checkInclusion = function(t, s) {
             }
         }
     }
-    // 未找到符合条件的子串
-    return false;
+    return res;
 };
 ```
 
 </div></div>
 </div></div>
 
-<hr /><details open hint-container details><summary style="font-size: medium"><strong>👾👾 算法可视化 👾👾</strong></summary><div id="data_permutation-in-string"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
-<div id="iframe_permutation-in-string"></div></div>
+<hr /><details open hint-container details><summary style="font-size: medium"><strong>🎃🎃 算法可视化 🎃🎃</strong></summary><div id="data_find-all-anagrams-in-a-string"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
+<div id="iframe_find-all-anagrams-in-a-string"></div></div>
 </details><hr /><br />
 
 </div>
 </details>
 </div>
-
-
 

@@ -37,6 +37,8 @@
 ### 滑动窗口
 
 1. [力扣76:最小覆盖子串](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/MinimumWindowSubstring.java)
+2. [力扣567:字符串的排列](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/PermutationInString.java)
+3. [力扣438:找到字符串中所有字母异位词](src/main/java/com/github/jumpbyte/review01/leetcode/editor/cn/FindAllAnagramsInAString.java)
 
 
 ### 前缀和
